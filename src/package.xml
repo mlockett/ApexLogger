@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>LogService</members>
+        <members>LogServiceTest</members>
+        <name>ApexClass</name>
+    </types>
+
+    <types>
+        <members>AppLogEvent</members>
+        <name>ApexTrigger</name>
+    </types>
+    <!--
+       <types>
+           <members></members>
+           <name>CustomMetadata</name>
+       </types>
+        -->
+    <types>
+        <members>AppLog__c</members>
+        <members>AppLogEvent__e</members>
+        <name>CustomObject</name>
+    </types>
+
+    <version>43.0</version>
+</Package>
