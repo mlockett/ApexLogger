@@ -3,7 +3,21 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <eventType>StandardVolume</eventType>
     <fields>
+        <fullName>AffectedId__c</fullName>
+        <description>Ids for object(s) related to log event</description>
+        <externalId>false</externalId>
+        <isFilteringDisabled>false</isFilteringDisabled>
+        <isNameField>false</isNameField>
+        <isSortingDisabled>false</isSortingDisabled>
+        <label>Affected Id</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ClassMethod__c</fullName>
+        <deprecated>false</deprecated>
         <description>Class and method text</description>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
@@ -17,6 +31,7 @@
     </fields>
     <fields>
         <fullName>LogLevel__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>
@@ -29,6 +44,7 @@
     </fields>
     <fields>
         <fullName>Message__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>
@@ -40,6 +56,7 @@
     </fields>
     <fields>
         <fullName>UserId__c</fullName>
+        <deprecated>false</deprecated>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>

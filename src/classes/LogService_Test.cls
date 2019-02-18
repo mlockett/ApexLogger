@@ -2,7 +2,7 @@
  * Created by mlockett on 6/16/2018.
  */
 @IsTest
-public with sharing class LogServiceTest {
+public with sharing class LogService_Test {
 
 	@IsTest
 	static void logWritesCorrectValues() {
@@ -103,6 +103,33 @@ public with sharing class LogServiceTest {
 
 		System.assert(appLog.Message__c.startsWith('Exception - Type: System.MathException;'));
 		System.assertEquals('ERROR', appLog.LogLevel__c);
+		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
+	}
+
+	@IsTest
+	static void errorWithIdWritesCorrectValuesForException() {
+		LogService.ignoreTestMode = true;
+		Test.startTest();
+		try {
+			//noinspection ApexUnusedDeclaration
+			Double badNumber = 1 / 0; // force MathException
+		}
+		catch (Exception ex) {
+			LogService.error(ex, 'foo/method', 'my id');
+		}
+
+		Test.stopTest();
+
+		AppLog__c appLog = [
+				SELECT Message__c, LogLevel__c, UserId__c, AffectedId__c
+				FROM AppLog__c
+				WHERE ClassMethod__c = 'foo/method'
+				LIMIT 1
+		];
+
+		System.assert(appLog.Message__c.startsWith('Exception - Type: System.MathException;'));
+		System.assertEquals('ERROR', appLog.LogLevel__c);
+		System.assertEquals('my id', appLog.AffectedId__c);
 		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
 	}
 
