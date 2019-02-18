@@ -47,6 +47,12 @@ Exception example:
 
 [![Deploy](https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png)](ttps://githubsfdeploy.herokuapp.com/app/githubdeploy/mlockett/ApexLogger)
 
+### History
+| Date       |Features |  
+| :-------- | :--- |  
+| 2018-11-18 | Initial commit  |  
+| 2019-02-18 | Added _Logger_ instance class, and _ILogger_ interface, allowing more versatility in object instantiation, and inheritance. |
+
 ### Future  
 In this first version, there is nothing built in to remove old logs, since 
 the desired duration of logs would be different per org.
