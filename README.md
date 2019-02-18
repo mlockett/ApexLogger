@@ -45,6 +45,7 @@ Exception example:
     log.error(myException, 'class/method');
     log.error(myException, 'class/method', affectedId);
 
+[![Deploy](https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png)](ttps://githubsfdeploy.herokuapp.com/app/githubdeploy/mlockett/ApexLogger)
 
 ### Future  
 In this first version, there is nothing built in to remove old logs, since 
