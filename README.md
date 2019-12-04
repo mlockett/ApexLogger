@@ -50,7 +50,7 @@ Exception example:
 * You can use clone the repo, then use _ant_ or your favorite IDE to deploy.  
 * You might consider creating an unlocked package and deploying it.  
 * Or use this handy link: 
-[![Deploy](https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png)](ttps://githubsfdeploy.herokuapp.com/app/githubdeploy/mlockett/ApexLogger)
+[![Deploy](https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png)](https://githubsfdeploy.herokuapp.com/app/githubdeploy/mlockett/ApexLogger)
 
 ### History
 | Date       |Features |  
