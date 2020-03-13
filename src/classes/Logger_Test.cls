@@ -8,6 +8,7 @@ public with sharing class Logger_Test {
 
    @IsTest
    static void debugWritesCorrectValues() {
+
       LogService.ignoreTestMode = true;
       Test.startTest();
       sut.debug('My message', 'foo/method');

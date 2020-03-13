@@ -14,6 +14,11 @@ global without sharing class LogService {
       ignoreTestMode = false;
    }
 
+   @TestVisible
+   // note: because SF doesn't allow creating custom metadata in tests, we're doing a workaround to allow testing
+   // different metadata
+   static List<LogFilter__mdt> testFilters = null;
+
    /**
     * writes log with message data
     *
@@ -73,11 +78,14 @@ global without sharing class LogService {
    global static void insertAppLogs(List<AppLogEvent__e> events) {
       List<AppLog__c> logEntries = new List<AppLog__c>();
       for (AppLogEvent__e event : events) {
+         String message = event.Message__c;
+         message = LogService.filterString(message);
          AppLog__c logEntry = new AppLog__c();
          logEntry.ClassMethod__c = event.ClassMethod__c;
          logEntry.LogLevel__c = event.LogLevel__c;
          logEntry.UserId__c = event.UserId__c;
-         logEntry.Message__c = event.Message__c;
+         logEntry.Message__c = message;
+         logEntry.ShortMessage__c = message.left(255);
          logEntry.AffectedId__c = event.AffectedId__c;
          logEntries.add(logEntry);
       }
@@ -131,7 +139,6 @@ global without sharing class LogService {
     * @param logLevel the System.LoggingLevel to log as
     * @param classMethod <class>.<method> if applicable
     */
-   @TestVisible
    public static void log(String message, String classMethod, System.LoggingLevel logLevel) {
       AppLogEvent__e event = new AppLogEvent__e();
       event.Message__c = message;
@@ -190,5 +197,33 @@ global without sharing class LogService {
    public static void log(Exception ex, String classMethod, String affectedId, System.LoggingLevel logLevel) {
       String message = getExceptionText(ex);
       LogService.log(message, classMethod, affectedId, logLevel);
+   }
+
+   /**
+    * Filters string based on LogFilter__mdt or optionally testFilters
+    *
+    * @param inputString
+    *
+    * @return string with replacements made for all active filters
+    */
+   public static String filterString(String inputString){
+      List<LogFilter__mdt> filters;
+      // note: because SF doesn't allow creating custom metadata in tests, we're doing a workaround to allow test to
+      // set expected metadata
+      if (testFilters == null) {
+         filters = [
+               SELECT RegexToFind__c, RegexToReplaceWith__c
+               FROM LogFilter__mdt
+               WHERE Active__c = TRUE];
+      }
+      else {
+         filters = testFilters;
+      }
+
+      for(LogFilter__mdt filter: filters){
+         inputString = inputString.replaceAll(filter.RegexToFind__c, filter.RegexToReplaceWith__c);
+         System.debug('inputString: ' + inputString);
+      }
+      return inputString;
    }
 }

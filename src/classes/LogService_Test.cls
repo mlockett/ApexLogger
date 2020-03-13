@@ -5,7 +5,23 @@
 public with sharing class LogService_Test {
 
 	@IsTest
+	static void verifyFilter(){
+		LogFilter__mdt filter1 = new LogFilter__mdt();
+		filter1.RegexToReplaceWith__c='***-**-$3';
+		filter1.RegexToFind__c='(\\d{3})-(\\d{2})-(\\d{4})';
+
+		LogService.testFilters = new List<LogFilter__mdt>();//[filter1];
+		LogService.testFilters.add(filter1);
+
+		String textToObscure = 'Hide the 123-12-1234 SSN.';
+		String expectedText = 'Hide the ***-**-1234 SSN.';
+
+		System.assertEquals(expectedText, LogService.filterString(textToObscure));
+	}
+
+	@IsTest
 	static void logWritesCorrectValues() {
+
 		LogService.ignoreTestMode = true;
 		Test.startTest();
 		LogService.log('My message', 'foo/method', LoggingLevel.WARN);

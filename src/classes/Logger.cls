@@ -1,5 +1,7 @@
 /**
- * Created by mlockett on 1/15/2019.
+  * Class allow logging at an instance level
+  * @author mlockett
+  * @date 2019-01-15
  */
 
 global without sharing class Logger implements  ILogger {

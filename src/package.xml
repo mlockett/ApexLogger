@@ -17,5 +17,9 @@
         <members>AppLogEvent</members>
         <name>ApexTrigger</name>
     </types>
+    <types>
+        <members>LogFilter__mdt</members>
+        <name>CustomMetadata</name>
+    </types>
     <version>44.0</version>
 </Package>
