@@ -7,6 +7,8 @@ log does not get rolled back in the case of a failed transaction.
 
 ## Features
 
+Writes log info to Salesforce database for convenient access with reports and SOQL
+
 Logs are written asynchronously so DML is not added to the current transaction.
 
 Enables a developer to write log data to the database without concern for data
