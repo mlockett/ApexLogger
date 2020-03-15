@@ -25,6 +25,24 @@ global without sharing class LogService {
    static List<LogRecordFilter__mdt> testRecordFilters = null;
 
 	/**
+	 * Enables logging to be called from Process Builder
+	 *
+	 * @param messages because PB can insert/update multiple records, method takes a list which is concatenated
+	 */
+	@InvocableMethod(Label='Write Log' Description='Writes desired data to AppLog')
+	global static void info(List<String> messages){
+		String messageString = '';
+		for(String message: messages){
+			messageString += message + ';\n';
+		}
+		LogService.log(messageString, 'Invocable', LoggingLevel.INFO);
+	}
+
+	global static void info(String message, String classMethod){
+		LogService.log(message, classMethod, LoggingLevel.INFO);
+	}
+
+	/**
 	 * writes log with message data
 	 *
 	 * @param message message to be logged
@@ -217,6 +235,16 @@ global without sharing class LogService {
 	 * @return string with replacements made for all active filters
 	 */
 	public static String filterString(String inputString) {
+		List<LogMessageFilter__mdt> filters = getMessageFilters();
+
+		for (LogMessageFilter__mdt filter : filters) {
+			inputString = inputString.replaceAll(filter.RegexToFind__c, filter.RegexToReplaceWith__c);
+			System.debug('inputString: ' + inputString);
+		}
+		return inputString;
+	}
+
+	private static List<LogMessageFilter__mdt> getMessageFilters() {
 		List<LogMessageFilter__mdt> filters;
 		// note: because SF doesn't allow creating custom metadata in tests, we're doing a workaround to allow test to
 		// set expected metadata
@@ -230,12 +258,7 @@ global without sharing class LogService {
 		else {
 			filters = testMessageFilters;
 		}
-
-		for (LogMessageFilter__mdt filter : filters) {
-			inputString = inputString.replaceAll(filter.RegexToFind__c, filter.RegexToReplaceWith__c);
-			System.debug('inputString: ' + inputString);
-		}
-		return inputString;
+		return filters;
 	}
 
 	/**

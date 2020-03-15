@@ -4,7 +4,6 @@
 @IsTest
 public with sharing class LogService_Test {
 
-	@TestSetup
 	static void testSetup() {
 		LogService.testRecordFilters = new List<LogRecordFilter__mdt>();
 		LogRecordFilter__mdt filter = new LogRecordFilter__mdt();
@@ -55,6 +54,8 @@ public with sharing class LogService_Test {
 
 	@IsTest
 	static void verifyFilter() {
+		testSetup();
+
 		LogMessageFilter__mdt filter1 = new LogMessageFilter__mdt();
 		filter1.RegexToReplaceWith__c = '***-**-$3';
 		filter1.RegexToFind__c = '(\\d{3})-(\\d{2})-(\\d{4})';
@@ -70,6 +71,7 @@ public with sharing class LogService_Test {
 
 	@IsTest
 	static void logWritesCorrectValues() {
+		testSetup();
 
 		LogService.ignoreTestMode = true;
 		Test.startTest();
@@ -89,7 +91,55 @@ public with sharing class LogService_Test {
 	}
 
 	@IsTest
+	static void invocableInfoWritesCorrectValues() {
+		testSetup();
+
+		List<String> messages = new List<String>{'a','b','c'};
+
+		LogService.ignoreTestMode = true;
+		Test.startTest();
+		LogService.info(messages);
+		Test.stopTest();
+
+		AppLog__c appLog = [
+				SELECT Message__c, LogLevel__c, UserId__c
+				FROM AppLog__c
+				LIMIT 1
+		];
+
+		// for reasons currently unclear, Salesforce seems to truncate the final \n :-(
+		String expected = 'a;\nb;\nc;';
+
+		System.assertEquals(expected, appLog.Message__c);
+		System.assertEquals('INFO', appLog.LogLevel__c);
+		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
+	}
+
+	@IsTest
+	static void infoWritesCorrectValues() {
+		testSetup();
+
+		LogService.ignoreTestMode = true;
+		Test.startTest();
+		LogService.info('My message', 'foo/method');
+		Test.stopTest();
+
+		AppLog__c appLog = [
+				SELECT Message__c, LogLevel__c, UserId__c
+				FROM AppLog__c
+				WHERE ClassMethod__c = 'foo/method'
+				LIMIT 1
+		];
+
+		System.assertEquals('My message', appLog.Message__c);
+		System.assertEquals('INFO', appLog.LogLevel__c);
+		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
+	}
+
+	@IsTest
 	static void debugWritesCorrectValues() {
+		testSetup();
+
 		LogService.ignoreTestMode = true;
 		Test.startTest();
 		LogService.debug('My message', 'foo/method');
@@ -109,6 +159,8 @@ public with sharing class LogService_Test {
 
 	@IsTest
 	static void warnWritesCorrectValues() {
+		testSetup();
+
 		LogService.ignoreTestMode = true;
 		Test.startTest();
 		LogService.warn('My message', 'foo/method');
@@ -128,6 +180,8 @@ public with sharing class LogService_Test {
 
 	@IsTest
 	static void errorWritesCorrectValues() {
+		testSetup();
+
 		LogService.ignoreTestMode = true;
 		Test.startTest();
 		LogService.error('My message', 'foo/method');
@@ -147,6 +201,8 @@ public with sharing class LogService_Test {
 
 	@IsTest
 	static void errorWritesCorrectValuesForException() {
+		testSetup();
+
 		LogService.ignoreTestMode = true;
 		Test.startTest();
 		try {
@@ -172,6 +228,9 @@ public with sharing class LogService_Test {
 
 	@IsTest
 	static void errorWithIdWritesCorrectValuesForException() {
+
+		testSetup();
+
 		LogService.ignoreTestMode = true;
 		Test.startTest();
 		try {
@@ -198,6 +257,9 @@ public with sharing class LogService_Test {
 
 	@IsTest
 	static void logWritesCorrectValuesForException() {
+
+		testSetup();
+
 		LogService.ignoreTestMode = true;
 		Test.startTest();
 		try {
@@ -223,6 +285,9 @@ public with sharing class LogService_Test {
 
 	@IsTest
 	static void errorDoesNotThrow() {
+
+		testSetup();
+
 		String tooLong = '12345678901234567890123456789012345678901234567890'
 				+ '12345678901234567890123456789012345678901234567890'
 				+ '12345678901234567890123456789012345678901234567890'
@@ -243,6 +308,9 @@ public with sharing class LogService_Test {
 
 	@IsTest
 	static void logFailsSansIgnoreTestMode() {
+
+		testSetup();
+
 		Test.startTest();
 		LogService.log('My message', 'foo/method', LoggingLevel.DEBUG);
 		Test.stopTest();
@@ -259,6 +327,9 @@ public with sharing class LogService_Test {
 
 	@IsTest
 	static void badEventGeneratesError() {
+
+		testSetup();
+
 		LogService.ignoreTestMode = true;
 		String tooLong = '12345678901234567890123456789012345678901234567890'
 				+ '12345678901234567890123456789012345678901234567890'

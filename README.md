@@ -7,19 +7,18 @@ log does not get rolled back in the case of a failed transaction.
 
 ## Features
 
-Writes log info to Salesforce database for convenient access with reports and SOQL
+Writes log data to Salesforce database for convenient access with reports and SOQL
 
-Logs are written asynchronously so DML is not added to the current transaction.
-
-Enables a developer to write log data to the database without concern for data
-being rolled back on error.
+Logs are written in a manner so DML is not added to the current transaction, and there is no rollback when errors occur
 
 Provides both static methods, and a concrete class that implements an interface 
 developers that might want to mock logging in tests, or provide other loggers.
 
-Enables configuration of data that should be filtered out of logs, e.g. Social Security numbers.
+Configure data that should be filtered out of logs, e.g. Social Security numbers.
 
-Enables filter what entries are logged based on LoggingLevel/User using Custom Metadata
+Configure which entries are logged by LoggingLevel/User
+
+Log from ProcessBuilders
 
 ## What's new?
 Added log record filtering by LoggingLevel/User
@@ -29,6 +28,8 @@ data.
 
 Added a Short Message field to the AppLog object to enable better manipulation with SOQL. The new field simply contains
 the first 255 characters of the Message.
+
+Include an "Invocable" method enabling log writing from ProcessBuilders
 
 ## Usage
 ### Using static methods
@@ -49,6 +50,10 @@ Exception example:
        LogService.error( ex, 'class/method');
     }
 
+### Using LogService in a Process Builder
+
+To log from within a Process Builder, add an Immediate Action; select the type Apex; for Apex Class, select 
+"Write Log"; then under Apex Variables, select the field "messages", then add the desired text. 
 ### Using Logger instance
     @TestVIsible
     ILogger log = new Logger(); // this allows you to switch to any ILogger for testing
@@ -149,12 +154,17 @@ to log INFO,DEBUG,WARN,ERROR. It might be desirable to reduce this for productio
 | 2019-02-18 | Added _Logger_ instance class, and _ILogger_ interface, allowing more versatility in object instantiation, and inheritance. |
 | 2020-03-12 | Added Log filtering to help avoid logging sensitive data. Added a short Message field that is a truncated version of the message field to enable better SOQL manipulation. |
 | 2020-03-15 | Added the ability to only log records configured in Log Record Filter custom metadata type. |
+| 2020-03-15 | Added calls for LogService.info(). Added an invocable call to LogService.info(). |
+
 ## Future Plans
+
 Add a mechanism to delete old logs systematically thru a scheduled job.
 
 Build a friendly Lightning-based log viewer
 
-Add the ability to configure which types of issues are actually logged (e.g. DEBUG, ERROR, etc.). 
-Considering making it configurable by person and/or profile.
+## Addendum
 
+This does not replace built-in Salesforce Debug Logging. Built-in system debug logs are
+preferable for debugging issues where the reproduction steps are known, and can be generated 
+at will and read within a maximum 24-hours time-frame.
 
