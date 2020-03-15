@@ -4,14 +4,63 @@
 @IsTest
 public with sharing class LogService_Test {
 
-	@IsTest
-	static void verifyFilter(){
-		LogFilter__mdt filter1 = new LogFilter__mdt();
-		filter1.RegexToReplaceWith__c='***-**-$3';
-		filter1.RegexToFind__c='(\\d{3})-(\\d{2})-(\\d{4})';
+	@TestSetup
+	static void testSetup() {
+		LogService.testRecordFilters = new List<LogRecordFilter__mdt>();
+		LogRecordFilter__mdt filter = new LogRecordFilter__mdt();
+		filter.LogLevelCsv__c = 'INFO,DEBUG,WARN,ERROR';
+		filter.Active_Log_User__c = '*';
+		filter.Active__c = true;
 
-		LogService.testFilters = new List<LogFilter__mdt>();//[filter1];
-		LogService.testFilters.add(filter1);
+		LogService.testRecordFilters.add(filter);
+	}
+
+	/**
+	* verifies that determining ability to log does not throw when test recordFilters are not supplied
+	*/
+	@IsTest
+	static void canQueryForLoggable() {
+		// clear test values
+		LogService.testRecordFilters = null;
+		LogService.isLoggable(UserInfo.getUserId(), LoggingLevel.DEBUG);
+	}
+
+	@IsTest
+	static void filtersLogRecordCorrectly() {
+		testSetup();
+		LogService.testRecordFilters[0].LogLevelCsv__c = 'INFO,WARN';
+
+		Test.startTest();
+		LogService.debug('My message', 'foo/method');
+		Test.stopTest();
+
+		List<AppLog__c> appLogs = [SELECT Id FROM AppLog__c];
+
+		System.assertEquals(0, appLogs.size());
+	}
+
+	@IsTest
+	static void filtersLogRecordCorrectlyWithNullFilter() {
+		testSetup();
+		LogService.testRecordFilters[0].LogLevelCsv__c = null;
+
+		Test.startTest();
+		LogService.debug('My message', 'foo/method');
+		Test.stopTest();
+
+		List<AppLog__c> appLogs = [SELECT Id FROM AppLog__c];
+
+		System.assertEquals(0, appLogs.size());
+	}
+
+	@IsTest
+	static void verifyFilter() {
+		LogMessageFilter__mdt filter1 = new LogMessageFilter__mdt();
+		filter1.RegexToReplaceWith__c = '***-**-$3';
+		filter1.RegexToFind__c = '(\\d{3})-(\\d{2})-(\\d{4})';
+
+		LogService.testMessageFilters = new List<LogMessageFilter__mdt>();//[filter1];
+		LogService.testMessageFilters.add(filter1);
 
 		String textToObscure = 'Hide the 123-12-1234 SSN.';
 		String expectedText = 'Hide the ***-**-1234 SSN.';
@@ -103,8 +152,7 @@ public with sharing class LogService_Test {
 		try {
 			//noinspection ApexUnusedDeclaration
 			Double badNumber = 1 / 0; // force MathException
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			LogService.error(ex, 'foo/method');
 		}
 
@@ -129,8 +177,7 @@ public with sharing class LogService_Test {
 		try {
 			//noinspection ApexUnusedDeclaration
 			Double badNumber = 1 / 0; // force MathException
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			LogService.error(ex, 'foo/method', 'my id');
 		}
 
@@ -156,8 +203,7 @@ public with sharing class LogService_Test {
 		try {
 			//noinspection ApexUnusedDeclaration
 			Double badNumber = 1 / 0; // force MathException
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			LogService.log(ex, 'foo/method', LoggingLevel.DEBUG);
 		}
 
@@ -194,7 +240,7 @@ public with sharing class LogService_Test {
 		System.assertEquals(0, appLogs.size());
 
 	}
-	
+
 	@IsTest
 	static void logFailsSansIgnoreTestMode() {
 		Test.startTest();
@@ -212,7 +258,7 @@ public with sharing class LogService_Test {
 	}
 
 	@IsTest
-	static void badEventGeneratesError(){
+	static void badEventGeneratesError() {
 		LogService.ignoreTestMode = true;
 		String tooLong = '12345678901234567890123456789012345678901234567890'
 				+ '12345678901234567890123456789012345678901234567890'

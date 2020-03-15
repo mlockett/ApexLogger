@@ -19,7 +19,11 @@ developers that might want to mock logging in tests, or provide other loggers.
 
 Enables configuration of data that should be filtered out of logs, e.g. Social Security numbers.
 
+Enables filter what entries are logged based on LoggingLevel/User using Custom Metadata
+
 ## What's new?
+Added log record filtering by LoggingLevel/User
+
 Added the ability to filter the log message using regular expressions, read from custom metadata, to help avoid logging sensitive 
 data.
 
@@ -96,19 +100,40 @@ For developers, to test before creating the Log Filter record, you might use som
      String result = sourceText.replaceAll(regexToFind, regexToReplaceWith);
      System.debug(result);
 
-### Important note:
+#### Important note:
 
 In code, we use "\\d" to indicate a decimal. The first slash is unescaping the second slash for Apex string literals.
 
 **In the custom metadata, we should enter "\d" since it is not an Apex string literal.**
 
-### Additional notes:
+#### Additional notes:
  
 Adding large numbers of filters can slow things down since each filter must be processed synchronously.
  
 Though it's not expected, an obscure filter could break existing unit tests since Apex test "see" custom metadata, 
 even without setting SeeAllData = true.
 
+### Filtering which records are logged
+
+Using the Custom Metadata type Log Record Filtering allows you to setup metadata records
+that determine what records should be logged per user. For instance, you could only log errors and 
+warnings in production, but log Info in sandboxes. You could also communicate to log DEBUG records
+for a single user (like a developer).
+
+This is intended to help reduce "noise" in the logs and can also be used
+to im prove performance and/or reduce Events fired should limits be an issue.
+ 
+Use an asterisk (*) in the Active Log User field to indicate all
+users.
+
+To indicate what levels should be logged, set the Log Levels CSV field. E.g. 'DEBUG,WARN,ERROR'
+
+#### NOTE: 
+For the LoggingLevels, all fields should be capitalized. We could adapt the code, but
+it is more efficient to do it only when the metadata record is created.
+
+IF  you  install this project, you will have a LogRecordFilter record that sets up * (all users)
+to log INFO,DEBUG,WARN,ERROR. It might be desirable to reduce this for production.
 ## Installation
 
 * You can clone the repo, then use _ant_ or your favorite IDE to deploy.  
@@ -123,7 +148,7 @@ even without setting SeeAllData = true.
 | 2018-11-18 | Initial commit  |  
 | 2019-02-18 | Added _Logger_ instance class, and _ILogger_ interface, allowing more versatility in object instantiation, and inheritance. |
 | 2020-03-12 | Added Log filtering to help avoid logging sensitive data. Added a short Message field that is a truncated version of the message field to enable better SOQL manipulation. |
-
+| 2020-03-15 | Added the ability to only log records configured in Log Record Filter custom metadata type. |
 ## Future Plans
 Add a mechanism to delete old logs systematically thru a scheduled job.
 
