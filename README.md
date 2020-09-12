@@ -1,5 +1,5 @@
 # ApexLogger
-For adding persistent log functionality to Apex.
+For adding persistent log functionality to Apex.  
 https://objectfactory.ws/tech/log.php
 
 This is a very basic class to give the ability to write persistent logs to the 
