@@ -1,7 +1,7 @@
 /**
  * For writing persistent logs using platform events
  *
- * @author mlockett
+ * @author mike lockett
  * @date 2018-06-16
  */
 global without sharing class LogService {
@@ -65,7 +65,7 @@ global without sharing class LogService {
 	/**
 	 * Write error with exception data
 	 *
-	 * @param ex
+	 * @param ex exception to log
 	 * @param classMethod <class>.<method> if applicable
 	 */
 	global static void error(Exception ex, String classMethod) {
@@ -75,7 +75,7 @@ global without sharing class LogService {
 	/**
 	 * Write error with exception data
 	 *
-	 * @param ex
+	 * @param ex exception to log
 	 * @param classMethod <class>.<method> if applicable
 	 * @param affectedId record Id(s) related to log event
 	 */
@@ -134,6 +134,7 @@ global without sharing class LogService {
 	 * publishes event... optionally suppresses when in test... deals with errors
 	 *
 	 * @param event AppLogEvent__e event to be published
+	 * @return list of db errors
 	 */
 	@TestVisible
 	private static List<Database.Error> publishEvent(AppLogEvent__e event) {
@@ -160,8 +161,8 @@ global without sharing class LogService {
 	 * writes log with message
 	 *
 	 * @param message message to be logged
-	 * @param logLevel the System.LoggingLevel to log as
 	 * @param classMethod <class>.<method> if applicable
+	 * @param logLevel the System.LoggingLevel to log as
 	 */
 	public static void log(String message, String classMethod, System.LoggingLevel logLevel) {
       // check if entry should be logged
@@ -169,6 +170,7 @@ global without sharing class LogService {
          return;
       }
 		AppLogEvent__e event = new AppLogEvent__e();
+		message = LogService.filterString(message);
 		event.Message__c = message;
 		event.LogLevel__c = logLevel.name();
 		event.ClassMethod__c = classMethod;
@@ -187,7 +189,6 @@ global without sharing class LogService {
 	 * @param affectedId record Id(s) related to log event
 	 * @param logLevel the System.LoggingLevel to log as
 	 */
-	@TestVisible
 	public static void log(String message, String classMethod, String affectedId, System.LoggingLevel logLevel) {
 		AppLogEvent__e event = new AppLogEvent__e();
 		event.Message__c = message;
@@ -206,8 +207,8 @@ global without sharing class LogService {
 	 * writes log with exception data
 	 *
 	 * @param ex the exception to be logged
-	 * @param logLevel the System.LoggingLevel to log as
 	 * @param classMethod <class>.<method> if applicable
+	 * @param logLevel the System.LoggingLevel to log as
 	 */
 	public static void log(Exception ex, String classMethod, System.LoggingLevel logLevel) {
 		String message = getExceptionText(ex);
@@ -230,7 +231,7 @@ global without sharing class LogService {
 	/**
 	 * Filters string based on LogFilter__mdt or optionally testFilters
 	 *
-	 * @param inputString
+	 * @param inputString string to filter
 	 *
 	 * @return string with replacements made for all active filters
 	 */
@@ -264,10 +265,10 @@ global without sharing class LogService {
 	/**
 	 * determines whether entry should be logged based on user and loglevel using LogRecordFilter__mdt
 	 *
-	 * @param currentUserId
-	 * @param logLevel
+	 * @param currentUserId user id to evaluate
+	 * @param logLevel log level to evaluate
 	 *
-	 * @return
+	 * @return whether entry should be logged
 	 */
 	public static Boolean isLoggable(String currentUserId, LoggingLevel logLevel) {
 		List<LogRecordFilter__mdt> recordFilters = getRecordFilters(currentUserId);
@@ -292,7 +293,7 @@ global without sharing class LogService {
     *
     * @param currentUserId active user in execution context
     *
-    * @return
+    * @return list of log filters
     */
    private static List<LogRecordFilter__mdt> getRecordFilters(Id currentUserId) {
       if(testRecordFilters != null){

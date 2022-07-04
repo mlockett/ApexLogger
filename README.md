@@ -19,9 +19,10 @@ Configure data that should be filtered out of logs, e.g. Social Security numbers
 
 Configure which entries are logged by LoggingLevel/User
 
-Log from ProcessBuilders
+Log from Flows
 
 ## What's new?
+
 Added log record filtering by LoggingLevel/User
 
 Added the ability to filter the log message using regular expressions, read from custom metadata, to help avoid logging sensitive 
