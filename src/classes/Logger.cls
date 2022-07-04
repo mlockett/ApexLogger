@@ -61,7 +61,7 @@ global without sharing class Logger implements  ILogger {
    /**
     * Write error with exception data
     *
-    * @param ex exception to log
+    * @param ex exception to logq
     * @param classMethod <class>.<method> if applicable
     * @param affectedId record Id(s) related to log event
     */
