@@ -150,13 +150,14 @@ to log INFO,DEBUG,WARN,ERROR. It might be desirable to reduce this for productio
   [![Deploy](https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png)](https://githubsfdeploy.herokuapp.com/app/githubdeploy/mlockett/ApexLogger)
 
 ## History
-| Date       |Features |  
-| :-------- | :--- |  
-| 2018-11-18 | Initial commit  |  
-| 2019-02-18 | Added _Logger_ instance class, and _ILogger_ interface, allowing more versatility in object instantiation, and inheritance. |
+| Date       | Features                                                                                                                                                                   |  
+|:-----------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
+| 2018-11-18 | Initial commit                                                                                                                                                             |  
+| 2019-02-18 | Added _Logger_ instance class, and _ILogger_ interface, allowing more versatility in object instantiation, and inheritance.                                                |
 | 2020-03-12 | Added Log filtering to help avoid logging sensitive data. Added a short Message field that is a truncated version of the message field to enable better SOQL manipulation. |
-| 2020-03-15 | Added the ability to only log records configured in Log Record Filter custom metadata type. |
-| 2020-03-15 | Added calls for LogService.info(). Added an invocable call to LogService.info(). |
+| 2020-03-15 | Added the ability to only log records configured in Log Record Filter custom metadata type.                                                                                |
+| 2020-03-15 | Added calls for LogService.info(). Added an invocable call to LogService.info().                                                                                           |
+| 2020-07-04 | Code clean up. Changed so message filter runs before the event is published to prevent publishing sensative data.                                                          |
 
 ## Future Plans
 

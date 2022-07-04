@@ -51,7 +51,7 @@ global without sharing class Logger implements  ILogger {
    /**
     * Write error with exception data
     *
-    * @param ex
+    * @param ex exception to log
     * @param classMethod <class>.<method> if applicable
     */
    global void error(Exception ex, String classMethod) {
@@ -61,7 +61,7 @@ global without sharing class Logger implements  ILogger {
    /**
     * Write error with exception data
     *
-    * @param ex
+    * @param ex exception to log
     * @param classMethod <class>.<method> if applicable
     * @param affectedId record Id(s) related to log event
     */
