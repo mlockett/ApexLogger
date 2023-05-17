@@ -4,156 +4,154 @@
  */
 @IsTest
 public with sharing class Logger_Test {
-   static Logger sut = new Logger();
+	static Logger sut = new Logger();
 
-   @IsTest
-   static void debugWritesCorrectValues() {
+	@IsTest
+	static void debugWritesCorrectValues() {
 
-      LogService.ignoreTestMode = true;
-      Test.startTest();
-      sut.debug('My message', 'myClass');
-      Test.stopTest();
+		LogService.ignoreTestMode = true;
+		Test.startTest();
+		sut.debug('My message', 'myClass');
+		Test.stopTest();
 
-      AppLog__c appLog = [
-            SELECT Message__c, LogLevel__c, UserId__c
-            FROM AppLog__c
-            WHERE Class__c = 'myClass'
-            LIMIT 1
-      ];
+		AppLog__c appLog = [
+				SELECT Message__c, LogLevel__c, UserId__c
+				FROM AppLog__c
+				WHERE Class__c = 'myClass'
+				LIMIT 1
+		];
 
-      System.assertEquals('My message', appLog.Message__c);
-      System.assertEquals('DEBUG', appLog.LogLevel__c);
-      System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
-   }
+		System.assertEquals('My message', appLog.Message__c);
+		System.assertEquals('DEBUG', appLog.LogLevel__c);
+		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
+	}
 
-   @IsTest
-   static void debugWithIdWritesCorrectValues() {
-      LogService.ignoreTestMode = true;
-      Test.startTest();
-      sut.debug('My message', 'myClass', 'my id');
-      Test.stopTest();
+	@IsTest
+	static void debugWithIdWritesCorrectValues() {
+		LogService.ignoreTestMode = true;
+		Test.startTest();
+		sut.debug('My message', 'myClass', 'my id');
+		Test.stopTest();
 
-      AppLog__c appLog = [
-            SELECT Message__c, LogLevel__c, UserId__c, AffectedId__c
-            FROM AppLog__c
-            WHERE Class__c = 'myClass'
-            LIMIT 1
-      ];
+		AppLog__c appLog = [
+				SELECT Message__c, LogLevel__c, UserId__c, AffectedId__c
+				FROM AppLog__c
+				WHERE Class__c = 'myClass'
+				LIMIT 1
+		];
 
-      System.assertEquals('My message', appLog.Message__c);
-      System.assertEquals('DEBUG', appLog.LogLevel__c);
-      System.assertEquals('my id', appLog.AffectedId__c);
-      System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
-   }
+		System.assertEquals('My message', appLog.Message__c);
+		System.assertEquals('DEBUG', appLog.LogLevel__c);
+		System.assertEquals('my id', appLog.AffectedId__c);
+		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
+	}
 
-   @IsTest
-   static void warnWritesCorrectValues() {
-      LogService.ignoreTestMode = true;
-      Test.startTest();
-      sut.warn('My message', 'myClass');
-      Test.stopTest();
+	@IsTest
+	static void warnWritesCorrectValues() {
+		LogService.ignoreTestMode = true;
+		Test.startTest();
+		sut.warn('My message', 'myClass');
+		Test.stopTest();
 
-      AppLog__c appLog = [
-            SELECT Message__c, LogLevel__c, UserId__c
-            FROM AppLog__c
-            WHERE Class__c = 'myClass'
-            LIMIT 1
-      ];
+		AppLog__c appLog = [
+				SELECT Message__c, LogLevel__c, UserId__c
+				FROM AppLog__c
+				WHERE Class__c = 'myClass'
+				LIMIT 1
+		];
 
-      System.assertEquals('My message', appLog.Message__c);
-      System.assertEquals('WARN', appLog.LogLevel__c);
-      System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
-   }
+		System.assertEquals('My message', appLog.Message__c);
+		System.assertEquals('WARN', appLog.LogLevel__c);
+		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
+	}
 
-   @IsTest
-   static void warnWithIdWritesCorrectValues() {
-      LogService.ignoreTestMode = true;
-      Test.startTest();
-      sut.warn('My message', 'myClass', 'my id');
-      Test.stopTest();
+	@IsTest
+	static void warnWithIdWritesCorrectValues() {
+		LogService.ignoreTestMode = true;
+		Test.startTest();
+		sut.warn('My message', 'myClass', 'my id');
+		Test.stopTest();
 
-      AppLog__c appLog = [
-            SELECT Message__c, LogLevel__c, UserId__c, AffectedId__c
-            FROM AppLog__c
-            WHERE Class__c = 'myClass'
-            LIMIT 1
-      ];
+		AppLog__c appLog = [
+				SELECT Message__c, LogLevel__c, UserId__c, AffectedId__c
+				FROM AppLog__c
+				WHERE Class__c = 'myClass'
+				LIMIT 1
+		];
 
-      System.assertEquals('My message', appLog.Message__c);
-      System.assertEquals('WARN', appLog.LogLevel__c);
-      System.assertEquals('my id', appLog.AffectedId__c);
-      System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
-   }
+		System.assertEquals('My message', appLog.Message__c);
+		System.assertEquals('WARN', appLog.LogLevel__c);
+		System.assertEquals('my id', appLog.AffectedId__c);
+		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
+	}
 
-   @IsTest
-   static void errorWritesCorrectValues() {
-      LogService.ignoreTestMode = true;
-      Test.startTest();
-      sut.error('My message', 'myClass');
-      Test.stopTest();
+	@IsTest
+	static void errorWritesCorrectValues() {
+		LogService.ignoreTestMode = true;
+		Test.startTest();
+		sut.error('My message', 'myClass');
+		Test.stopTest();
 
-      AppLog__c appLog = [
-            SELECT Message__c, LogLevel__c, UserId__c
-            FROM AppLog__c
-            WHERE Class__c = 'myClass'
-            LIMIT 1
-      ];
+		AppLog__c appLog = [
+				SELECT Message__c, LogLevel__c, UserId__c
+				FROM AppLog__c
+				WHERE Class__c = 'myClass'
+				LIMIT 1
+		];
 
-      System.assertEquals('My message', appLog.Message__c);
-      System.assertEquals('ERROR', appLog.LogLevel__c);
-      System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
-   }
+		System.assertEquals('My message', appLog.Message__c);
+		System.assertEquals('ERROR', appLog.LogLevel__c);
+		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
+	}
 
-   @IsTest
-   static void errorWritesCorrectValuesForException() {
-      LogService.ignoreTestMode = true;
-      Test.startTest();
-      try {
-         //noinspection ApexUnusedDeclaration
-         Double badNumber = 1 / 0; // force MathException
-      }
-      catch (Exception ex) {
-         sut.error(ex, 'myClass');
-      }
+	@IsTest
+	static void errorWritesCorrectValuesForException() {
+		LogService.ignoreTestMode = true;
+		Test.startTest();
+		try {
+			//noinspection ApexUnusedDeclaration
+			Double badNumber = 1 / 0; // force MathException
+		} catch (Exception ex) {
+			sut.error(ex, 'myClass');
+		}
 
-      Test.stopTest();
+		Test.stopTest();
 
-      AppLog__c appLog = [
-            SELECT Message__c, LogLevel__c, UserId__c
-            FROM AppLog__c
-            WHERE Class__c = 'myClass'
-            LIMIT 1
-      ];
+		AppLog__c appLog = [
+				SELECT Message__c, LogLevel__c, UserId__c
+				FROM AppLog__c
+				WHERE Class__c = 'myClass'
+				LIMIT 1
+		];
 
-      System.assert(appLog.Message__c.startsWith('Exception - Type: System.MathException;'));
-      System.assertEquals('ERROR', appLog.LogLevel__c);
-      System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
-   }
+		System.assert(appLog.Message__c.startsWith('Exception - Type: System.MathException;'));
+		System.assertEquals('ERROR', appLog.LogLevel__c);
+		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
+	}
 
-   @IsTest
-   static void errorWithIdWritesCorrectValuesForException() {
-      LogService.ignoreTestMode = true;
-      Test.startTest();
-      try {
-         //noinspection ApexUnusedDeclaration
-         Double badNumber = 1 / 0; // force MathException
-      }
-      catch (Exception ex) {
-         sut.error(ex, 'myClass', 'idValue');
-      }
+	@IsTest
+	static void errorWithIdWritesCorrectValuesForException() {
+		LogService.ignoreTestMode = true;
+		Test.startTest();
+		try {
+			//noinspection ApexUnusedDeclaration
+			Double badNumber = 1 / 0; // force MathException
+		} catch (Exception ex) {
+			sut.error(ex, 'myClass', 'idValue');
+		}
 
-      Test.stopTest();
+		Test.stopTest();
 
-      AppLog__c appLog = [
-            SELECT Message__c, LogLevel__c, UserId__c, AffectedId__c
-            FROM AppLog__c
-            WHERE Class__c = 'myClass'
-            LIMIT 1
-      ];
+		AppLog__c appLog = [
+				SELECT Message__c, LogLevel__c, UserId__c, AffectedId__c
+				FROM AppLog__c
+				WHERE Class__c = 'myClass'
+				LIMIT 1
+		];
 
-      System.assert(appLog.Message__c.startsWith('Exception - Type: System.MathException;'));
-      System.assertEquals('idValue', appLog.AffectedId__c);
-      System.assertEquals('ERROR', appLog.LogLevel__c);
-      System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
-   }
+		System.assert(appLog.Message__c.startsWith('Exception - Type: System.MathException;'));
+		System.assertEquals('idValue', appLog.AffectedId__c);
+		System.assertEquals('ERROR', appLog.LogLevel__c);
+		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
+	}
 }

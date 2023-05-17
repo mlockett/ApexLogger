@@ -94,7 +94,9 @@ public with sharing class LogService_Test {
 	static void invocableInfoWritesCorrectValues() {
 		testSetup();
 
-		List<String> messages = new List<String>{'a','b','c'};
+		List<String> messages = new List<String>{
+				'a', 'b', 'c'
+		};
 
 		LogService.ignoreTestMode = true;
 		Test.startTest();

@@ -14,15 +14,15 @@ global without sharing class LogService {
 		ignoreTestMode = false;
 	}
 
-   @TestVisible
-         // note: because SF doesn't allow creating custom metadata in tests, we're doing a workaround to allow testing
-         // different metadata
-   static List<LogMessageFilter__mdt> testMessageFilters = null;
+	@TestVisible
+			// note: because SF doesn't allow creating custom metadata in tests, we're doing a workaround to allow testing
+			// different metadata
+	static List<LogMessageFilter__mdt> testMessageFilters = null;
 
-   @TestVisible
-         // note: because SF doesn't allow creating custom metadata in tests, we're doing a workaround to allow testing
-         // different metadata
-   static List<LogRecordFilter__mdt> testRecordFilters = null;
+	@TestVisible
+			// note: because SF doesn't allow creating custom metadata in tests, we're doing a workaround to allow testing
+			// different metadata
+	static List<LogRecordFilter__mdt> testRecordFilters = null;
 
 	/**
 	 * Enables logging to be called from Process Builder
@@ -30,15 +30,15 @@ global without sharing class LogService {
 	 * @param messages because PB can insert/update multiple records, method takes a list which is concatenated
 	 */
 	@InvocableMethod(Label='Write Log' Description='Writes desired data to AppLog')
-	global static void info(List<String> messages){
+	global static void info(List<String> messages) {
 		String messageString = '';
-		for(String message: messages){
+		for (String message : messages) {
 			messageString += message + ';\n';
 		}
 		LogService.log(messageString, 'Invocable', LoggingLevel.INFO);
 	}
 
-	global static void info(String message, String className){
+	global static void info(String message, String className) {
 		LogService.log(message, className, LoggingLevel.INFO);
 	}
 
@@ -147,8 +147,7 @@ global without sharing class LogService {
 		// Inspect publishing result
 		if (dbResult.isSuccess()) {
 			System.debug('Successfully published event:' + event);
-		}
-		else {
+		} else {
 			for (Database.Error err : dbResult.getErrors()) {
 				System.debug('* Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
 			}
@@ -165,10 +164,10 @@ global without sharing class LogService {
 	 * @param logLevel the System.LoggingLevel to log as
 	 */
 	public static void log(String message, String className, System.LoggingLevel logLevel) {
-      // check if entry should be logged
-      if(!isLoggable(UserInfo.getUserId(), logLevel)){
-         return;
-      }
+		// check if entry should be logged
+		if (!isLoggable(UserInfo.getUserId(), logLevel)) {
+			return;
+		}
 		AppLogEvent__e event = new AppLogEvent__e();
 		message = LogService.filterString(message);
 		event.Message__c = message;
@@ -255,8 +254,7 @@ global without sharing class LogService {
 					FROM LogMessageFilter__mdt
 					WHERE Active__c = TRUE
 			];
-		}
-		else {
+		} else {
 			filters = testMessageFilters;
 		}
 		return filters;
@@ -277,36 +275,36 @@ global without sharing class LogService {
 			if (filter.LogLevelCsv__c == null) {
 				continue;
 			}
-         // splits on comma space or comma
+			// splits on comma space or comma
 			List<String> logLevels = filter.LogLevelCsv__c.split(', |,');
 
 			if (logLevels.contains(strLogLevel) && (filter.Active_Log_User__c == '*')
-         || filter.Active_Log_User__c == currentUserId){
+					|| filter.Active_Log_User__c == currentUserId) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-   /**
-    * gets LogRecordFilter__mdt for current user and for * (all users)
-    *
-    * @param currentUserId active user in execution context
-    *
-    * @return list of log filters
-    */
-   private static List<LogRecordFilter__mdt> getRecordFilters(Id currentUserId) {
-      if(testRecordFilters != null){
-         return testRecordFilters;
-      }
-      List<LogRecordFilter__mdt> recordFilters = [
-            SELECT Id, LogLevelCsv__c, Active_Log_User__c, Active__c
-            FROM LogRecordFilter__mdt
-            WHERE (Active_Log_User__c = :currentUserId
-                  OR Active_Log_User__c = '*')
-                  AND Active__c = TRUE
-            ORDER BY Active_Log_User__c
-      ];
-      return recordFilters;
-   }
+	/**
+	 * gets LogRecordFilter__mdt for current user and for * (all users)
+	 *
+	 * @param currentUserId active user in execution context
+	 *
+	 * @return list of log filters
+	 */
+	private static List<LogRecordFilter__mdt> getRecordFilters(Id currentUserId) {
+		if (testRecordFilters != null) {
+			return testRecordFilters;
+		}
+		List<LogRecordFilter__mdt> recordFilters = [
+				SELECT Id, LogLevelCsv__c, Active_Log_User__c, Active__c
+				FROM LogRecordFilter__mdt
+				WHERE (Active_Log_User__c = :currentUserId
+				OR Active_Log_User__c = '*')
+				AND Active__c = TRUE
+				ORDER BY Active_Log_User__c
+		];
+		return recordFilters;
+	}
 }
