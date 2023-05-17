@@ -81,7 +81,7 @@ public with sharing class LogService_Test {
 		AppLog__c appLog = [
 				SELECT Message__c, LogLevel__c, UserId__c
 				FROM AppLog__c
-				WHERE ClassMethod__c = 'foo/method'
+				WHERE Class__c = 'foo/method'
 				LIMIT 1
 		];
 
@@ -127,7 +127,7 @@ public with sharing class LogService_Test {
 		AppLog__c appLog = [
 				SELECT Message__c, LogLevel__c, UserId__c
 				FROM AppLog__c
-				WHERE ClassMethod__c = 'foo/method'
+				WHERE Class__c = 'foo/method'
 				LIMIT 1
 		];
 
@@ -148,7 +148,7 @@ public with sharing class LogService_Test {
 		AppLog__c appLog = [
 				SELECT Message__c, LogLevel__c, UserId__c
 				FROM AppLog__c
-				WHERE ClassMethod__c = 'foo/method'
+				WHERE Class__c = 'foo/method'
 				LIMIT 1
 		];
 
@@ -169,7 +169,7 @@ public with sharing class LogService_Test {
 		AppLog__c appLog = [
 				SELECT Message__c, LogLevel__c, UserId__c
 				FROM AppLog__c
-				WHERE ClassMethod__c = 'foo/method'
+				WHERE Class__c = 'foo/method'
 				LIMIT 1
 		];
 
@@ -190,7 +190,7 @@ public with sharing class LogService_Test {
 		AppLog__c appLog = [
 				SELECT Message__c, LogLevel__c, UserId__c
 				FROM AppLog__c
-				WHERE ClassMethod__c = 'foo/method'
+				WHERE Class__c = 'foo/method'
 				LIMIT 1
 		];
 
@@ -217,7 +217,7 @@ public with sharing class LogService_Test {
 		AppLog__c appLog = [
 				SELECT Message__c, LogLevel__c, UserId__c
 				FROM AppLog__c
-				WHERE ClassMethod__c = 'foo/method'
+				WHERE Class__c = 'foo/method'
 				LIMIT 1
 		];
 
@@ -237,7 +237,7 @@ public with sharing class LogService_Test {
 			//noinspection ApexUnusedDeclaration
 			Double badNumber = 1 / 0; // force MathException
 		} catch (Exception ex) {
-			LogService.error(ex, 'foo/method', 'my id');
+			LogService.error(ex, 'MyClass', 'my id');
 		}
 
 		Test.stopTest();
@@ -245,7 +245,7 @@ public with sharing class LogService_Test {
 		AppLog__c appLog = [
 				SELECT Message__c, LogLevel__c, UserId__c, AffectedId__c
 				FROM AppLog__c
-				WHERE ClassMethod__c = 'foo/method'
+				WHERE Class__c = 'MyClass'
 				LIMIT 1
 		];
 
@@ -274,7 +274,7 @@ public with sharing class LogService_Test {
 		AppLog__c appLog = [
 				SELECT Message__c, LogLevel__c, UserId__c
 				FROM AppLog__c
-				WHERE ClassMethod__c = 'foo/method'
+				WHERE Class__c = 'foo/method'
 				LIMIT 1
 		];
 
@@ -318,7 +318,7 @@ public with sharing class LogService_Test {
 		List<AppLog__c> appLogs = [
 				SELECT Message__c, LogLevel__c, UserId__c
 				FROM AppLog__c
-				WHERE ClassMethod__c = 'foo/method'
+				WHERE Class__c = 'foo/method'
 				LIMIT 1
 		];
 
@@ -336,7 +336,7 @@ public with sharing class LogService_Test {
 				+ '12345678901234567890123456789012345678901234567890'
 				+ '12345678901234567890123456789012345678901234567890';
 		AppLogEvent__e event = new AppLogEvent__e();
-		event.ClassMethod__c = tooLong;
+		event.Class__c = tooLong;
 		List<Database.Error> errors = LogService.publishEvent(event);
 		System.assertEquals(1, errors.size());
 	}

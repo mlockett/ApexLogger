@@ -10,72 +10,72 @@ global without sharing class Logger implements  ILogger {
     * writes log with message data
     *
     * @param message message to be logged
-    * @param classMethod <class>.<method> if applicable
+    * @param className class
     */
-   global void debug(String message, String classMethod) {
-      LogService.log(message, classMethod, LoggingLevel.DEBUG);
+   global void debug(String message, String className) {
+      LogService.log(message, className, LoggingLevel.DEBUG);
    }
 
    /**
     * writes log with message data
     *
     * @param message message to be logged
-    * @param classMethod <class>.<method> if applicable
+    * @param className <class>.<method> if applicable
     * @param affectedId record Id(s) related to log event
     */
-   global void debug(String message, String classMethod, String affectedId) {
-      LogService.log(message, classMethod, affectedId, LoggingLevel.DEBUG);
+   global void debug(String message, String className, String affectedId) {
+      LogService.log(message, className, affectedId, LoggingLevel.DEBUG);
    }
 
    /**
     * writes log with message data
     *
     * @param message message to be logged
-    * @param classMethod <class>.<method> if applicable
+    * @param className <class>.<method> if applicable
     */
-   global void warn(String message, String classMethod) {
-      LogService.log(message, classMethod, LoggingLevel.WARN);
+   global void warn(String message, String className) {
+      LogService.log(message, className, LoggingLevel.WARN);
    }
 
    /**
     * writes log with message data
     *
     * @param message message to be logged
-    * @param classMethod <class>.<method> if applicable
+    * @param className <class>.<method> if applicable
     * @param affectedId record Id(s) related to log event
     */
-   global void warn(String message, String classMethod, String affectedId) {
-      LogService.log(message, classMethod, affectedId, LoggingLevel.WARN);
+   global void warn(String message, String className, String affectedId) {
+      LogService.log(message, className, affectedId, LoggingLevel.WARN);
    }
 
    /**
     * Write error with exception data
     *
     * @param ex exception to log
-    * @param classMethod <class>.<method> if applicable
+    * @param className <class>.<method> if applicable
     */
-   global void error(Exception ex, String classMethod) {
-      LogService.log(ex, classMethod, LoggingLevel.ERROR);
+   global void error(Exception ex, String className) {
+      LogService.log(ex, className, LoggingLevel.ERROR);
    }
 
    /**
     * Write error with exception data
     *
     * @param ex exception to logq
-    * @param classMethod <class>.<method> if applicable
+    * @param className <class>.<method> if applicable
     * @param affectedId record Id(s) related to log event
     */
-   global void error(Exception ex, String classMethod, String affectedId) {
-      LogService.log(ex, classMethod, affectedId, LoggingLevel.ERROR);
+   global void error(Exception ex, String className, String affectedId) {
+      LogService.log(ex, className, affectedId, LoggingLevel.ERROR);
    }
 
    /**
     * writes log with message data
     *
     * @param message message to be logged
-    * @param classMethod <class>.<method> if applicable
+    * @param className <class>.<method> if applicable
     */
-   global void error(String message, String classMethod) {
-      LogService.log(message, classMethod, LoggingLevel.ERROR);
+   global void error(String message, String className) {
+      LogService.log(message, className, LoggingLevel.ERROR);
    }
 }

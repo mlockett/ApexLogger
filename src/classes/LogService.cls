@@ -38,59 +38,59 @@ global without sharing class LogService {
 		LogService.log(messageString, 'Invocable', LoggingLevel.INFO);
 	}
 
-	global static void info(String message, String classMethod){
-		LogService.log(message, classMethod, LoggingLevel.INFO);
+	global static void info(String message, String className){
+		LogService.log(message, className, LoggingLevel.INFO);
 	}
 
 	/**
 	 * writes log with message data
 	 *
 	 * @param message message to be logged
-	 * @param classMethod <class>.<method> if applicable
+	 * @param className <class>.<method> if applicable
 	 */
-	global static void debug(String message, String classMethod) {
-		LogService.log(message, classMethod, LoggingLevel.DEBUG);
+	global static void debug(String message, String className) {
+		LogService.log(message, className, LoggingLevel.DEBUG);
 	}
 
 	/**
 	 * writes log with message data
 	 *
 	 * @param message message to be logged
-	 * @param classMethod <class>.<method> if applicable
+	 * @param className <class>.<method> if applicable
 	 */
-	global static void warn(String message, String classMethod) {
-		LogService.log(message, classMethod, LoggingLevel.WARN);
+	global static void warn(String message, String className) {
+		LogService.log(message, className, LoggingLevel.WARN);
 	}
 
 	/**
 	 * Write error with exception data
 	 *
 	 * @param ex exception to log
-	 * @param classMethod <class>.<method> if applicable
+	 * @param className <class>.<method> if applicable
 	 */
-	global static void error(Exception ex, String classMethod) {
-		LogService.log(ex, classMethod, LoggingLevel.ERROR);
+	global static void error(Exception ex, String className) {
+		LogService.log(ex, className, LoggingLevel.ERROR);
 	}
 
 	/**
 	 * Write error with exception data
 	 *
 	 * @param ex exception to log
-	 * @param classMethod <class>.<method> if applicable
+	 * @param className <class>.<method> if applicable
 	 * @param affectedId record Id(s) related to log event
 	 */
-	global static void error(Exception ex, String classMethod, String affectedId) {
-		LogService.log(ex, classMethod, affectedId, LoggingLevel.ERROR);
+	global static void error(Exception ex, String className, String affectedId) {
+		LogService.log(ex, className, affectedId, LoggingLevel.ERROR);
 	}
 
 	/**
 	 * writes log with message data
 	 *
 	 * @param message message to be logged
-	 * @param classMethod <class>.<method> if applicable
+	 * @param className <class>.<method> if applicable
 	 */
-	global static void error(String message, String classMethod) {
-		LogService.log(message, classMethod, LoggingLevel.ERROR);
+	global static void error(String message, String className) {
+		LogService.log(message, className, LoggingLevel.ERROR);
 	}
 
 	/**
@@ -104,7 +104,7 @@ global without sharing class LogService {
 			String message = event.Message__c;
 			message = LogService.filterString(message);
 			AppLog__c logEntry = new AppLog__c();
-			logEntry.ClassMethod__c = event.ClassMethod__c;
+			logEntry.Class__c = event.Class__c;
 			logEntry.LogLevel__c = event.LogLevel__c;
 			logEntry.UserId__c = event.UserId__c;
 			logEntry.Message__c = message;
@@ -161,10 +161,10 @@ global without sharing class LogService {
 	 * writes log with message
 	 *
 	 * @param message message to be logged
-	 * @param classMethod <class>.<method> if applicable
+	 * @param className <class>.<method> if applicable
 	 * @param logLevel the System.LoggingLevel to log as
 	 */
-	public static void log(String message, String classMethod, System.LoggingLevel logLevel) {
+	public static void log(String message, String className, System.LoggingLevel logLevel) {
       // check if entry should be logged
       if(!isLoggable(UserInfo.getUserId(), logLevel)){
          return;
@@ -173,7 +173,7 @@ global without sharing class LogService {
 		message = LogService.filterString(message);
 		event.Message__c = message;
 		event.LogLevel__c = logLevel.name();
-		event.ClassMethod__c = classMethod;
+		event.Class__c = className;
 		String userId = UserInfo.getUserId();
 		if (userId != null) {
 			event.UserId__c = userId;
@@ -185,15 +185,15 @@ global without sharing class LogService {
 	 * writes log with message
 	 *
 	 * @param message message to be logged
-	 * @param classMethod <class>.<method> if applicable
+	 * @param className <class>.<method> if applicable
 	 * @param affectedId record Id(s) related to log event
 	 * @param logLevel the System.LoggingLevel to log as
 	 */
-	public static void log(String message, String classMethod, String affectedId, System.LoggingLevel logLevel) {
+	public static void log(String message, String className, String affectedId, System.LoggingLevel logLevel) {
 		AppLogEvent__e event = new AppLogEvent__e();
 		event.Message__c = message;
 		event.LogLevel__c = logLevel.name();
-		event.ClassMethod__c = classMethod;
+		event.Class__c = className;
 		event.AffectedId__c = affectedId;
 
 		String userId = UserInfo.getUserId();
@@ -207,25 +207,25 @@ global without sharing class LogService {
 	 * writes log with exception data
 	 *
 	 * @param ex the exception to be logged
-	 * @param classMethod <class>.<method> if applicable
+	 * @param className <class>.<method> if applicable
 	 * @param logLevel the System.LoggingLevel to log as
 	 */
-	public static void log(Exception ex, String classMethod, System.LoggingLevel logLevel) {
+	public static void log(Exception ex, String className, System.LoggingLevel logLevel) {
 		String message = getExceptionText(ex);
-		LogService.log(message, classMethod, logLevel);
+		LogService.log(message, className, logLevel);
 	}
 
 	/**
 	 * writes log with exception data
 	 *
 	 * @param ex the exception to be logged
-	 * @param classMethod <class>.<method> if applicable
+	 * @param className <class>.<method> if applicable
 	 * @param affectedId record Id(s) related to log event
 	 * @param logLevel the System.LoggingLevel to log as
 	 */
-	public static void log(Exception ex, String classMethod, String affectedId, System.LoggingLevel logLevel) {
+	public static void log(Exception ex, String className, String affectedId, System.LoggingLevel logLevel) {
 		String message = getExceptionText(ex);
-		LogService.log(message, classMethod, affectedId, logLevel);
+		LogService.log(message, className, affectedId, logLevel);
 	}
 
 	/**

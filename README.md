@@ -157,10 +157,12 @@ to log INFO,DEBUG,WARN,ERROR. It might be desirable to reduce this for productio
 | 2020-03-12 | Added Log filtering to help avoid logging sensitive data. Added a short Message field that is a truncated version of the message field to enable better SOQL manipulation. |
 | 2020-03-15 | Added the ability to only log records configured in Log Record Filter custom metadata type.                                                                                |
 | 2020-03-15 | Added calls for LogService.info(). Added an invocable call to LogService.info().                                                                                           |
-| 2020-07-04 | Code clean up. Changed so message filter runs before the event is published to prevent publishing sensative data.                                                          |
-| 2023-05-16 | Fixed a deployment error. Added a permission set, Apex Log Reader, for reading log data.                                                                                   |
+| 2020-07-04 | Code clean up. Changed so message filter runs before the event is published to prevent publishing sensitive data.                                                          |
+| 2023-05-16 | Fixed a deployment error. Added a permission set, Apex Log Reader, for reading log data. Split ClassMethod field into two field, Class__c and Method__c.                   |
 
 ## Future Plans
+
+Add methods to log method name.
 
 Add a mechanism to delete old logs systematically thru a scheduled job.
 

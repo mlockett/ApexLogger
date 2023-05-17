@@ -7,7 +7,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AppLog__c.ClassMethod__c</field>
+        <field>AppLog__c.Class__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AppLog__c.Method__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

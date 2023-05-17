@@ -16,13 +16,26 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ClassMethod__c</fullName>
-        <description>Class and method text</description>
+        <fullName>Class__c</fullName>
+        <description>Class name</description>
         <externalId>false</externalId>
         <isFilteringDisabled>false</isFilteringDisabled>
         <isNameField>false</isNameField>
         <isSortingDisabled>false</isSortingDisabled>
-        <label>Class/Method</label>
+        <label>Class</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Method__c</fullName>
+        <description>Method name</description>
+        <externalId>false</externalId>
+        <isFilteringDisabled>false</isFilteringDisabled>
+        <isNameField>false</isNameField>
+        <isSortingDisabled>false</isSortingDisabled>
+        <label>Method</label>
         <length>100</length>
         <required>false</required>
         <type>Text</type>

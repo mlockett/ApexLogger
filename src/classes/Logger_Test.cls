@@ -11,13 +11,13 @@ public with sharing class Logger_Test {
 
       LogService.ignoreTestMode = true;
       Test.startTest();
-      sut.debug('My message', 'foo/method');
+      sut.debug('My message', 'myClass');
       Test.stopTest();
 
       AppLog__c appLog = [
             SELECT Message__c, LogLevel__c, UserId__c
             FROM AppLog__c
-            WHERE ClassMethod__c = 'foo/method'
+            WHERE Class__c = 'myClass'
             LIMIT 1
       ];
 
@@ -30,13 +30,13 @@ public with sharing class Logger_Test {
    static void debugWithIdWritesCorrectValues() {
       LogService.ignoreTestMode = true;
       Test.startTest();
-      sut.debug('My message', 'foo/method', 'my id');
+      sut.debug('My message', 'myClass', 'my id');
       Test.stopTest();
 
       AppLog__c appLog = [
             SELECT Message__c, LogLevel__c, UserId__c, AffectedId__c
             FROM AppLog__c
-            WHERE ClassMethod__c = 'foo/method'
+            WHERE Class__c = 'myClass'
             LIMIT 1
       ];
 
@@ -50,13 +50,13 @@ public with sharing class Logger_Test {
    static void warnWritesCorrectValues() {
       LogService.ignoreTestMode = true;
       Test.startTest();
-      sut.warn('My message', 'foo/method');
+      sut.warn('My message', 'myClass');
       Test.stopTest();
 
       AppLog__c appLog = [
             SELECT Message__c, LogLevel__c, UserId__c
             FROM AppLog__c
-            WHERE ClassMethod__c = 'foo/method'
+            WHERE Class__c = 'myClass'
             LIMIT 1
       ];
 
@@ -69,13 +69,13 @@ public with sharing class Logger_Test {
    static void warnWithIdWritesCorrectValues() {
       LogService.ignoreTestMode = true;
       Test.startTest();
-      sut.warn('My message', 'foo/method', 'my id');
+      sut.warn('My message', 'myClass', 'my id');
       Test.stopTest();
 
       AppLog__c appLog = [
             SELECT Message__c, LogLevel__c, UserId__c, AffectedId__c
             FROM AppLog__c
-            WHERE ClassMethod__c = 'foo/method'
+            WHERE Class__c = 'myClass'
             LIMIT 1
       ];
 
@@ -89,13 +89,13 @@ public with sharing class Logger_Test {
    static void errorWritesCorrectValues() {
       LogService.ignoreTestMode = true;
       Test.startTest();
-      sut.error('My message', 'foo/method');
+      sut.error('My message', 'myClass');
       Test.stopTest();
 
       AppLog__c appLog = [
             SELECT Message__c, LogLevel__c, UserId__c
             FROM AppLog__c
-            WHERE ClassMethod__c = 'foo/method'
+            WHERE Class__c = 'myClass'
             LIMIT 1
       ];
 
@@ -113,7 +113,7 @@ public with sharing class Logger_Test {
          Double badNumber = 1 / 0; // force MathException
       }
       catch (Exception ex) {
-         sut.error(ex, 'foo/method');
+         sut.error(ex, 'myClass');
       }
 
       Test.stopTest();
@@ -121,7 +121,7 @@ public with sharing class Logger_Test {
       AppLog__c appLog = [
             SELECT Message__c, LogLevel__c, UserId__c
             FROM AppLog__c
-            WHERE ClassMethod__c = 'foo/method'
+            WHERE Class__c = 'myClass'
             LIMIT 1
       ];
 
@@ -139,7 +139,7 @@ public with sharing class Logger_Test {
          Double badNumber = 1 / 0; // force MathException
       }
       catch (Exception ex) {
-         sut.error(ex, 'foo/method', 'idValue');
+         sut.error(ex, 'myClass', 'idValue');
       }
 
       Test.stopTest();
@@ -147,7 +147,7 @@ public with sharing class Logger_Test {
       AppLog__c appLog = [
             SELECT Message__c, LogLevel__c, UserId__c, AffectedId__c
             FROM AppLog__c
-            WHERE ClassMethod__c = 'foo/method'
+            WHERE Class__c = 'myClass'
             LIMIT 1
       ];
 
