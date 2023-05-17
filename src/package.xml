@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>ILogger</members>
@@ -11,6 +11,8 @@
     <types>
         <members>AppLog__c</members>
         <members>AppLogEvent__e</members>
+        <members>LogMessageFilter__mdt</members>
+        <members>LogRecordFilter__mdt</members>
         <name>CustomObject</name>
     </types>
     <types>
@@ -18,8 +20,14 @@
         <name>ApexTrigger</name>
     </types>
     <types>
-        <members>LogFilter__mdt</members>
+        <members>LogMessageFilter.SsnHide</members>
+        <members>LogMessageFilter.SsnLastFour</members>
+        <members>LogRecordFilter.AllUsers</members>
         <name>CustomMetadata</name>
     </types>
-    <version>44.0</version>
+    <types>
+        <members>ApexLogReader</members>
+        <name>PermissionSet</name>
+    </types>
+    <version>57.0</version>
 </Package>
