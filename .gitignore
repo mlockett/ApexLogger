@@ -1,4 +1,6 @@
 .idea
 .sf/
 .sfdx/
+.vim-force.com
+*.iml
 IlluminatedCloud
