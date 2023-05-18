@@ -12,17 +12,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AppLog__c.Method__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>AppLog__c.LogLevel__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>AppLog__c.Message__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AppLog__c.Method__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

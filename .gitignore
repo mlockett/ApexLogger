@@ -1,5 +1,4 @@
-
-/*
-!.gitignore
-!/src/
-!README.md
+.idea
+.sf/
+.sfdx/
+IlluminatedCloud
