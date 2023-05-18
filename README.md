@@ -159,6 +159,7 @@ to log INFO,DEBUG,WARN,ERROR. It might be desirable to reduce this for productio
 | 2020-03-15 | Added calls for LogService.info(). Added an invocable call to LogService.info().                                                                                           |
 | 2020-07-04 | Code clean up. Changed so message filter runs before the event is published to prevent publishing sensitive data.                                                          |
 | 2023-05-16 | Fixed a deployment error. Added a permission set, Apex Log Reader, for reading log data. Split ClassMethod field into two field, Class__c and Method__c.                   |
+| 2023-05-17 | Changed to DX Source.                   |
 
 ## Future Plans
 
