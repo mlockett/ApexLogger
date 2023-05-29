@@ -175,3 +175,20 @@ This does not replace built-in Salesforce Debug Logging. Built-in system debug l
 preferable for debugging issues where the reproduction steps are known, and can be generated 
 at will and read within a maximum 24-hours time-frame.
 
+## Project Creation
+
+To create a scratch org:
+
+    sfdx org create scratch -f ./config/project-scratch-def.json -a logger -v <dev hub>
+
+To deploy source to scratch org:
+
+    sfdx project deploy start -o logger
+
+To retrieve changes from scratch org:
+
+    sfdx project retrieve start -o logger
+
+To delete scratch org:
+
+    sfdx org delete scratch -o logger

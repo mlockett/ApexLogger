@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Determine what log levels are logged and optionally, for what users. Asterisk &quot;*&quot; means all users.
+Note: log writing access levels are based on least-restrictive principal.</description>
+    <label>Log Record Filter</label>
+    <pluralLabel>Log Record Filters</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

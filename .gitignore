@@ -1,6 +1,12 @@
-.idea
+# dx files
 .sf/
 .sfdx/
 .vim-force.com
+
+# IntelliJ / Illuminated Cloud
+.idea
 *.iml
 IlluminatedCloud
+
+# mac system files
+**/.DS_Store
