@@ -24,18 +24,18 @@ global without sharing class LogService {
 			// different metadata
 	static List<LogRecordFilter__mdt> testRecordFilters = null;
 
-	/**
-	 * Enables logging to be called from Process Builder
-	 *
-	 * @param messages because PB can insert/update multiple records, method takes a list which is concatenated
-	 */
-	@InvocableMethod(Label='Write Log' Description='Writes desired data to AppLog')
-	global static void info(List<String> messages) {
-		String messageString = '';
-		for (String message : messages) {
-			messageString += message + ';\n';
+	@InvocableMethod(Label='Write Log Data' Description='Writes desired data to AppLog')
+	global static void logData(List<LogData> logs) {
+		System.debug('In invocable: ' + logs.size());
+
+		for (LogData dataItem : logs) {
+			String message = dataItem.message;
+			String loggingLevel = dataItem.loggingLevel;
+			String className = dataItem.className;
+			String affectedId = dataItem.affectedId;
+
+			LogService.log(message, className, affectedId, loggingLevel);
 		}
-		LogService.log(messageString, 'Invocable', LoggingLevel.INFO);
 	}
 
 	global static void info(String message, String className) {
@@ -142,6 +142,8 @@ global without sharing class LogService {
 		if (!ignoreTestMode && Test.isRunningTest()) {
 			return null;
 		}
+
+		System.debug(event);
 		Database.SaveResult dbResult = EventBus.publish(event);
 
 		// Inspect publishing result
@@ -192,6 +194,28 @@ global without sharing class LogService {
 		AppLogEvent__e event = new AppLogEvent__e();
 		event.Message__c = message;
 		event.LogLevel__c = logLevel.name();
+		event.Class__c = className;
+		event.AffectedId__c = affectedId;
+
+		String userId = UserInfo.getUserId();
+		if (userId != null) {
+			event.UserId__c = userId;
+		}
+		publishEvent(event);
+	}
+
+	/**
+	 * writes log with message
+	 *
+	 * @param message message to be logged
+	 * @param className <class>.<method> if applicable
+	 * @param affectedId record Id(s) related to log event
+	 * @param logLevel the System.LoggingLevel to log as a string
+	 */
+	public static void log(String message, String className, String affectedId, String logLevel) {
+		AppLogEvent__e event = new AppLogEvent__e();
+		event.Message__c = message;
+		event.LogLevel__c = logLevel;
 		event.Class__c = className;
 		event.AffectedId__c = affectedId;
 
@@ -307,4 +331,17 @@ global without sharing class LogService {
 		];
 		return recordFilters;
 	}
-}
+	global class LogData{
+		@InvocableVariable(Label='Message' Description='Message to be logged' Required='true')
+		global String message;
+
+		@InvocableVariable(Label='Logging Level' Description='Level to Log')
+		global String loggingLevel;
+
+		@InvocableVariable(Label='Flow Name' Description='Name of Flow error occured in')
+		global String className;
+
+		@InvocableVariable(Label='Object Id' Description='Id of object error occured on')
+		global String affectedId;
+	}
+} 

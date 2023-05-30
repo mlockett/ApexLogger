@@ -94,13 +94,17 @@ public with sharing class LogService_Test {
 	static void invocableInfoWritesCorrectValues() {
 		testSetup();
 
-		List<String> messages = new List<String>{
-				'a', 'b', 'c'
-		};
+		List<LogService.LogData> messages = new List<LogService.LogData>();
+		LogService.LogData data = new LogService.LogData();
+		data.message='abc';
+		data.loggingLevel='INFO';
+		data.className='My Flow';
+		data.affectedId='';
+		messages.add(data);
 
 		LogService.ignoreTestMode = true;
 		Test.startTest();
-		LogService.info(messages);
+		LogService.logData(messages);
 		Test.stopTest();
 
 		AppLog__c appLog = [
@@ -109,10 +113,7 @@ public with sharing class LogService_Test {
 				LIMIT 1
 		];
 
-		// for reasons currently unclear, Salesforce seems to truncate the final \n :-(
-		String expected = 'a;\nb;\nc;';
-
-		System.assertEquals(expected, appLog.Message__c);
+		System.assertEquals('abc', appLog.Message__c);
 		System.assertEquals('INFO', appLog.LogLevel__c);
 		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
 	}

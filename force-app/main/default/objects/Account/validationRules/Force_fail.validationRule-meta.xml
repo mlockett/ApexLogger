@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Force_fail</fullName>
+    <active>true</active>
+    <errorConditionFormula>BillingPostalCode = &apos;80920&apos;</errorConditionFormula>
+    <errorMessage>80920 is not allowes</errorMessage>
+</ValidationRule>

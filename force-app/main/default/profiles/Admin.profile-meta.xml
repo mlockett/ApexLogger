@@ -116,6 +116,9 @@
         <field>LogRecordFilter__mdt.LogLevelCsv__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <layoutAssignments>
+        <layout>AppLog__c-App Log Layout</layout>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -134,6 +137,10 @@
         <object>AppLog__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <tabVisibilities>
+        <tab>AppLog__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
     <userLicense>Salesforce</userLicense>
     <userPermissions>
         <enabled>true</enabled>

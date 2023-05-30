@@ -155,8 +155,9 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>App Log</label>
     <nameField>
-        <label>AppLog Name</label>
-        <type>Text</type>
+        <displayFormat>Log-{0000}</displayFormat>
+        <label>App Log Name</label>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>App Logs</pluralLabel>
     <searchLayouts></searchLayouts>
