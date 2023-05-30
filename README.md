@@ -35,21 +35,21 @@ Include an "Invocable" method enabling log writing from ProcessBuilders
 
 ## Usage
 ### Using static methods
-`LogService.debug('my dedug text', 'class/method');` 
-`LogService.debug('my dedug text', 'class/method', affectedId);` 
-`LogService.warn('my waring text', 'class/method');` 
-`LogService.warn('my waring text', 'class/method', affectedId);` 
-`LogService.error('my error text', 'class/method');`
-`LogService.error('my error text', 'class/method', affectedId);` 
-`LogService.error(myException, 'class/method');` 
-`LogService.error(myException, 'class/method', affectedId);` 
+`LogService.debug('my dedug text', 'className');` 
+`LogService.debug('my dedug text', 'className', affectedId);` 
+`LogService.warn('my waring text', 'className');` 
+`LogService.warn('my waring text', 'className', affectedId);` 
+`LogService.error('my error text', 'className');`
+`LogService.error('my error text', 'className', affectedId);` 
+`LogService.error(myException, 'className');` 
+`LogService.error(myException, 'className', affectedId);` 
 
 Exception example:
 
     try{
        Account acct = [SELECT Id FROM Account WHERE Id=:id];
     } catch( Exception ex ){
-       LogService.error( ex, 'class/method');
+       LogService.error( ex, 'className');
     }
 
 ### Using LogService in a Process Builder
@@ -60,14 +60,14 @@ To log from within a Process Builder, add an Immediate Action; select the type A
     @TestVIsible
     ILogger log = new Logger(); // this allows you to switch to any ILogger for testing
     
-    log.debug('my dedug text', 'class/method');  
-    log.debug('my dedug text', 'class/method', affectedId);
-    log.warn('my waring text', 'class/method');
-    log.warn('my waring text', 'class/method', affectedId);
-    log.error('my error text', 'class/method');
-    log.error('my error text', 'class/method', affectedId);
-    log.error(myException, 'class/method');
-    log.error(myException, 'class/method', affectedId);
+    log.debug('my dedug text', 'className');  
+    log.debug('my dedug text', 'className', affectedId);
+    log.warn('my waring text', 'className');
+    log.warn('my waring text', 'className', affectedId);
+    log.error('my error text', 'className');
+    log.error('my error text', 'className', affectedId);
+    log.error(myException, 'className');
+    log.error(myException, 'className', affectedId);
 
 ### Filtering Data
 Manage records in the custom metadata type, _Log Filter_. Supply a value for _Regex To Find_ and a value 
