@@ -12,7 +12,7 @@
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>App Logs</label>
     <navType>Standard</navType>
-    <tabs>AppLog__c</tabs>
+    <tabs>Log_List</tabs>
     <tabs>Log_Reader</tabs>
     <tabs>Log_Tester</tabs>
     <uiType>Lightning</uiType>

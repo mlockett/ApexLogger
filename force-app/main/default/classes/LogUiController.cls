@@ -32,6 +32,16 @@ public without sharing class LogUiController {
 		return retVal;
 	}
 
+	@AuraEnabled
+	public static List<AggregateResult> getLogCountByLevel(){
+		List<AggregateResult> results = [
+				SELECT COUNT(Id), MIN(CreatedDate), LogLevel__c
+				FROM AppLog__c
+				GROUP BY LogLevel__c
+				ORDER BY LogLevel__c];
+		return results;
+	}
+
 	public class LogParamWrapper {
 		@AuraEnabled
 		public List<String> logLevels { get; set; }
@@ -39,5 +49,4 @@ public without sharing class LogUiController {
 		@AuraEnabled
 		public Integer logsPerPage { get; set; }
 	}
-
 }

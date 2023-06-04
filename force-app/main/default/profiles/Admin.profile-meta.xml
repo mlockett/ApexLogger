@@ -158,6 +158,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Log_List</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Log_Reader</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>

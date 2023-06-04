@@ -1,0 +1,27 @@
+<!--
+ - Created by mikelockett on 6/3/23.
+ -->
+
+<!-- App Log Storage -->
+<template>
+  <lightning-card title="App Log Storage" icon-name="custom:custom14">
+    <article class="slds-var-p-left_medium slds-var-p-right_medium">
+    <table>
+      <tr>
+        <th class="slds-var-p-bottom_x-small">Log Level</th>
+        <th class="slds-var-p-bottom_x-small">Earliest Date</th>
+        <th class="slds-var-p-bottom_x-small">Record Count</th>
+      </tr>
+      <template for:each={data} for:item="log">
+      <tr key={log.LogLevel__c}>
+        <td class="slds-var-p-bottom_x-small">{log.LogLevel__c}</td>
+        <td class="slds-var-p-bottom_x-small">{log.expr1}</td>
+        <td class="slds-var-p-bottom_x-small">{log.expr0}</td>
+      </tr>
+      </template>
+
+    </table>
+    </article>
+
+  </lightning-card>
+</template>
