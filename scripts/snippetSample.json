@@ -1,0 +1,51 @@
+{
+    "Log": {
+        "prefix": "info",
+        "body": [
+            "LogService.info()",
+            
+            "\t\tSeverity_c = '${3|Low, Medium, High|}', ",
+            "\t\tEvent_Category__c = '$4', ",
+            "\t\tDescription__c = '$5', ",
+            "It\tobject _Name__c = '$6'",
+            "\t\tSource_Code_Location__c = '$TM_FILENAME _BASE - line $TM_LINE _NUMBER'",
+            "\t);",
+            "}"
+        ],
+        "description": "Log output to console and Error Framework"
+    }
+}
+{
+    "Log Info": {
+        "prefix": "info",
+        "body": [
+            "LogService.info()",
+            
+            "\t\tSeverity_c = '${3|Low, Medium, High|}', ",
+            "\t\tEvent_Category__c = '$4', ",
+            "\t\tDescription__c = '$5', ",
+            "It\tobject _Name__c = '$6'",
+            "\t\tSource_Code_Location__c = '$TM_FILENAME _BASE - line $TM_LINE _NUMBER'",
+            "\t);",
+            "}"
+        ],
+        "description": "Logs info to AppLog"
+    }
+}
+
+{
+    "Try Catch Error Log": {
+        "prefix": "trylog",
+        "body": [
+            "try {",
+            "\t$M_SELECTED_TEXT",
+            "}",
+            "catch ($2Exception e){",
+            "\tSystem.debug ('Exception: ' + e);",
+            "\tLogService.error( ex, '$TM_FILENAME _BASE');",
+            "}"
+        ],
+        "description": "Wraps text in try/catch and logs exception to AppLog"
+    }
+    
+}

@@ -35,10 +35,10 @@ Include an "Invocable" method enabling log writing from ProcessBuilders
 
 ## Usage
 ### Using static methods
-`LogService.debug('my dedug text', 'className');` 
-`LogService.debug('my dedug text', 'className', affectedId);` 
-`LogService.warn('my waring text', 'className');` 
-`LogService.warn('my waring text', 'className', affectedId);` 
+`LogService.debug('my debug text', 'className');` 
+`LogService.debug('my debug text', 'className', affectedId);` 
+`LogService.warn('my warning text', 'className');` 
+`LogService.warn('my warning text', 'className', affectedId);` 
 `LogService.error('my error text', 'className');`
 `LogService.error('my error text', 'className', affectedId);` 
 `LogService.error(myException, 'className');` 
@@ -60,10 +60,10 @@ To log from within a Process Builder, add an Immediate Action; select the type A
     @TestVIsible
     ILogger log = new Logger(); // this allows you to switch to any ILogger for testing
     
-    log.debug('my dedug text', 'className');  
-    log.debug('my dedug text', 'className', affectedId);
-    log.warn('my waring text', 'className');
-    log.warn('my waring text', 'className', affectedId);
+    log.debug('my debug text', 'className');  
+    log.debug('my debug text', 'className', affectedId);
+    log.warn('my warning text', 'className');
+    log.warn('my warning text', 'className', affectedId);
     log.error('my error text', 'className');
     log.error('my error text', 'className', affectedId);
     log.error(myException, 'className');
@@ -88,7 +88,7 @@ in all log Messages and Short Messages.
 By using capture groups, this will obfuscate all but the last four digits of the SSNs found above
 in all log Messages and Short Messages. E.g. 123-45-6789 becomes xxx-xx-6789
 
-The developer should be able to filter out anything that can be identified by a regex on an org-wide basis assuming it's supported in Apex.
+The developer should be able to filter out anything that can be identified by a regex on an org-wide basis assuming it is supported in Apex.
 
 #### To verify your regex entries:
 

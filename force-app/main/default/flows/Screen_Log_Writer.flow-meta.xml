@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Write_Log</name>
+        <label>Write Log</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <actionName>LogService</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>className</name>
+            <value>
+                <stringValue>Screen Log Writer</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>loggingLevel</name>
+            <value>
+                <stringValue>Info</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <elementReference>LogText</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <description>Writes simple Info log.</description>
+    <environments>Default</environments>
+    <interviewLabel>Screen Log Writer {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Screen Log Writer</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <screens>
+        <name>Main</name>
+        <label>Main</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Write_Log</targetReference>
+        </connector>
+        <fields>
+            <name>LogText</name>
+            <dataType>String</dataType>
+            <fieldText>Enter text to log</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Main</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+</Flow>

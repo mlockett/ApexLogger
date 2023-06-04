@@ -2,6 +2,7 @@
 .sf/
 .sfdx/
 .vim-force.com
+.vscode/
 
 # IntelliJ / Illuminated Cloud
 .idea
@@ -10,3 +11,9 @@ IlluminatedCloud
 
 # mac system files
 **/.DS_Store
+
+# unnecessary entries
+**/profilePasswordPolicies/**.*
+**/profileSessionSettings/**.*
+
+7J6M8CH@KbXf

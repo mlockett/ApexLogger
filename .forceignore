@@ -3,6 +3,7 @@
 #
 
 package.xml
+/scripts/
 
 # LWC configuration files
 **/jsconfig.json
@@ -13,3 +14,4 @@ package.xml
 
 # profiles
 ./force-app/main/default/profiles/
+**/.eslintrc.json
