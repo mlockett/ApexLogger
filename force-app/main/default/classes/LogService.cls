@@ -102,7 +102,6 @@ global without sharing class LogService {
 		List<AppLog__c> logEntries = new List<AppLog__c>();
 		for (AppLogEvent__e event : events) {
 			String message = event.Message__c;
-			message = LogService.filterString(message);
 			AppLog__c logEntry = new AppLog__c();
 			logEntry.Class__c = event.Class__c;
 			logEntry.LogLevel__c = event.LogLevel__c;
@@ -143,6 +142,8 @@ global without sharing class LogService {
 			return null;
 		}
 
+		event.Message__c = filterString(event.Message__c);
+
 		System.debug(event);
 		Database.SaveResult dbResult = EventBus.publish(event);
 
@@ -171,7 +172,6 @@ global without sharing class LogService {
 			return;
 		}
 		AppLogEvent__e event = new AppLogEvent__e();
-		message = LogService.filterString(message);
 		event.Message__c = message;
 		event.LogLevel__c = logLevel.name();
 		event.Class__c = className;

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>App_Logs</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
     <classAccesses>
         <apexClass>ILogger</apexClass>
         <enabled>true</enabled>
@@ -14,6 +19,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>LogUiController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LogUiController_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -123,6 +132,9 @@
     <layoutAssignments>
         <layout>AppLog__c-App Log Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>LogMessageFilter__mdt-Log Message Filter Layout</layout>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -147,6 +159,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Log_Reader</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Log_Tester</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <userLicense>Salesforce</userLicense>

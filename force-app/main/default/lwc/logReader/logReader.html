@@ -30,7 +30,7 @@
         icon-name-when-off="utility:add"
         icon-name-when-on="utility:check"
         icon-name-when-hover="utility:close"
-        selected={logLevelsSelected.info}
+        selected={logLevelsSelected.debug}
         onclick={handleButtonClick}
         data-log-level="debug">
       </lightning-button-stateful>
@@ -43,7 +43,7 @@
         icon-name-when-off="utility:add"
         icon-name-when-on="utility:check"
         icon-name-when-hover="utility:close"
-        selected={logLevelsSelected.info}
+        selected={logLevelsSelected.warn}
         onclick={handleButtonClick}
         data-log-level="warn">
       </lightning-button-stateful>
@@ -56,7 +56,7 @@
         icon-name-when-off="utility:add"
         icon-name-when-on="utility:check"
         icon-name-when-hover="utility:close"
-        selected={logLevelsSelected.info}
+        selected={logLevelsSelected.error}
         onclick={handleButtonClick}
         data-log-level="error">
       </lightning-button-stateful>
@@ -98,7 +98,16 @@
                 <br> Params: {paramsForGetLogJson}
             </template>
 
-            <p class="slds-var-p-bottom_medium">To see new log entries pushed to the UI, turn on Tail</p>
+          <template if:true={isUnsubscribeDisabled}>
+            <p class="slds-var-p-bottom_medium">
+              <strong>To see new log entries pushed above, click on Tail.</strong>
+            </p>
+          </template>
+          <template if:false={isUnsubscribeDisabled}>  
+            <p class="slds-var-p-bottom_medium">
+              New log entries are now being tracked and will be displayed at the top of the list.
+            </p>
+          </template>
             <!--<lightning-input label="Channel Name" value={channelName}
                              onchange={handleChannelName}></lightning-input>-->
             <lightning-button variant="success" label="Tail" title="Subscribe"

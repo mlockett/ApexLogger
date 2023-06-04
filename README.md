@@ -8,7 +8,7 @@ log does not get rolled back in the case of a failed transaction.
 
 ## Features
 
-Writes log data to Salesforce database for convenient access with reports and SOQL
+### Writes log data to Salesforce database for convenient access with reports and SOQL
 
 Logs are written in a manner so DML is not added to the current transaction, and there is no rollback when errors occur
 
@@ -20,6 +20,8 @@ Configure data that should be filtered out of logs, e.g. Social Security numbers
 Configure which entries are logged by LoggingLevel/User
 
 Log from Flows
+
+### See new logs in real time
 
 ## What's new?
 
