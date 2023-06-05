@@ -1,121 +1,128 @@
 <!--
- - Created by mikelockett on 3/15/20.
+  @author mikelockett
+  @date 3/15/20.
  -->
 
 <!-- Log Reader -->
 <template>
-    <lightning-card title="Log Reader" icon-name="custom:custom67">
-        <div class="slds-m-around_medium">
-<div class="slds-grid">
-    <div class="slds-size_1-of-2" style="vertical-align: bottom">
-      <!--<div  style="border: 1px solid #acc; display:inline-block; border-radius:4px;">-->
-      <lightning-button-stateful
-        class="log-level"
-        label-when-off="Info"
-        label-when-on="Info"
-        label-when-hover="Info"
-        icon-name-when-off="utility:add"
-        icon-name-when-on="utility:check"
-        icon-name-when-hover="utility:close"
-        selected={logLevelsSelected.info}
-        onclick={handleButtonClick}
-        data-log-level="info">
-      </lightning-button-stateful>
+  <lightning-card title="Log Reader" icon-name="custom:custom67">
+    <div class="slds-m-around_medium">
+      <div class="slds-grid">
+        <div class="slds-size_1-of-2" style="vertical-align: bottom">
+          <!--<div  style="border: 1px solid #acc; display:inline-block; border-radius:4px;">-->
+          <lightning-button-stateful
+            class="log-level"
+            label-when-off="Info"
+            label-when-on="Info"
+            label-when-hover="Info"
+            icon-name-when-off="utility:add"
+            icon-name-when-on="utility:check"
+            icon-name-when-hover="utility:close"
+            selected={logLevelsSelected.info}
+            onclick={handleButtonClick}
+            data-log-level="info">
+          </lightning-button-stateful>
 
-      <lightning-button-stateful
-        class="log-level"
-        label-when-off="Debug"
-        label-when-on="Debug"
-        label-when-hover="Debug"
-        icon-name-when-off="utility:add"
-        icon-name-when-on="utility:check"
-        icon-name-when-hover="utility:close"
-        selected={logLevelsSelected.debug}
-        onclick={handleButtonClick}
-        data-log-level="debug">
-      </lightning-button-stateful>
+          <lightning-button-stateful
+            class="log-level"
+            label-when-off="Debug"
+            label-when-on="Debug"
+            label-when-hover="Debug"
+            icon-name-when-off="utility:add"
+            icon-name-when-on="utility:check"
+            icon-name-when-hover="utility:close"
+            selected={logLevelsSelected.debug}
+            onclick={handleButtonClick}
+            data-log-level="debug">
+          </lightning-button-stateful>
 
-      <lightning-button-stateful
-        class="log-level"
-        label-when-off="Warn"
-        label-when-on="Warn"
-        label-when-hover="Warn"
-        icon-name-when-off="utility:add"
-        icon-name-when-on="utility:check"
-        icon-name-when-hover="utility:close"
-        selected={logLevelsSelected.warn}
-        onclick={handleButtonClick}
-        data-log-level="warn">
-      </lightning-button-stateful>
+          <lightning-button-stateful
+            class="log-level"
+            label-when-off="Warn"
+            label-when-on="Warn"
+            label-when-hover="Warn"
+            icon-name-when-off="utility:add"
+            icon-name-when-on="utility:check"
+            icon-name-when-hover="utility:close"
+            selected={logLevelsSelected.warn}
+            onclick={handleButtonClick}
+            data-log-level="warn">
+          </lightning-button-stateful>
 
-      <lightning-button-stateful
-        class="log-level"
-        label-when-off="Error"
-        label-when-on="Error"
-        label-when-hover="Error"
-        icon-name-when-off="utility:add"
-        icon-name-when-on="utility:check"
-        icon-name-when-hover="utility:close"
-        selected={logLevelsSelected.error}
-        onclick={handleButtonClick}
-        data-log-level="error">
-      </lightning-button-stateful>
+          <lightning-button-stateful
+            class="log-level"
+            label-when-off="Error"
+            label-when-on="Error"
+            label-when-hover="Error"
+            icon-name-when-off="utility:add"
+            icon-name-when-on="utility:check"
+            icon-name-when-hover="utility:close"
+            selected={logLevelsSelected.error}
+            onclick={handleButtonClick}
+            data-log-level="error">
+          </lightning-button-stateful>
 
-    </div>
-    <div class="slds-size_1-of-2 right-tool-bar">
-            <lightning-combobox
-              name="Logs per page"
-              label="Logs per page"
-              class="logs-per-page slds-var-p-bottom_medium"
-              value={logsPerPage}
-              options={logsPerPageOptions}
-              onchange={handleLogsPerPageChange} ></lightning-combobox>
-
-            <button onclick={loadLogs} class="refresh slds-var-m-left_medium">Refresh</button>
         </div>
-    </div>
+        <div class="slds-size_1-of-2 right-tool-bar">
+          <lightning-combobox
+            name="Logs per page"
+            label="Logs per page"
+            class="logs-per-page slds-var-p-bottom_medium"
+            value={logsPerPage}
+            options={logsPerPageOptions}
+            onchange={handleLogsPerPageChange}></lightning-combobox>
 
-            <template if:true={logs}>
-
-                <div class="log-list">
-                    <lightning-datatable
-                            columns={columns}
-                            data={logs}
-                            hide-checkbox-column
-                            key-field="id"
-                            onrowaction={handleRowAction}
-                            wrap-text-max-lines="4">
-                    </lightning-datatable>
-                    <template if:false={hasLogs}>
-                        <div class="slds-var-p-around_large">There are no new logs for the selected log levels.</div>
-                    </template>
-                </div>
-            </template>
-
-            <template if:true={logsError}>
-                <br>
-                Error: {logsErrorJson}
-                <br> Params: {paramsForGetLogJson}
-            </template>
-
-          <template if:true={isUnsubscribeDisabled}>
-            <p class="slds-var-p-bottom_medium">
-              <strong>To see new log entries pushed above, click on Tail.</strong>
-            </p>
-          </template>
-          <template if:false={isUnsubscribeDisabled}>  
-            <p class="slds-var-p-bottom_medium">
-              New log entries are now being tracked and will be displayed at the top of the list.
-            </p>
-          </template>
-            <!--<lightning-input label="Channel Name" value={channelName}
-                             onchange={handleChannelName}></lightning-input>-->
-            <lightning-button variant="success" label="Tail" title="Subscribe"
-                              onclick={handleSubscribe} disabled={isSubscribeDisabled}
-                              ></lightning-button>
-            <lightning-button variant="destructive" label="Stop Tail" title="Unsubscribe"
-                              onclick={handleUnsubscribe} disabled={isUnsubscribeDisabled}
-                              class="slds-m-left_x-small"></lightning-button>
+          <button onclick={loadLogs} class="refresh slds-var-m-left_medium">Refresh</button>
         </div>
-    </lightning-card>
+      </div>
+
+      <template if:true={logs}>
+
+        <div class="log-list">
+          <lightning-datatable
+            columns={columns}
+            data={logs}
+            hide-checkbox-column
+            key-field="id"
+            onrowaction={handleRowAction}
+            wrap-text-max-lines="4">
+          </lightning-datatable>
+          <template if:false={hasLogs}>
+            <div class="slds-var-p-around_large">There are no new logs for the selected log levels.</div>
+          </template>
+        </div>
+      </template>
+
+      <template if:true={logsError}>
+        <br>
+        Error: {logsErrorJson}
+        <br> Params: {paramsForGetLogJson}
+      </template>
+
+      <template if:true={isUnsubscribeDisabled}>
+        <p class="slds-var-p-bottom_medium">
+          <strong>To see new log entries pushed above, click on Tail.</strong>
+        </p>
+      </template>
+      <template if:false={isUnsubscribeDisabled}>
+        <p class="slds-var-p-bottom_medium">
+          New log entries are now being tracked and will be displayed at the top of the list.
+        </p>
+      </template>
+      <lightning-button
+        variant="success"
+        label="Tail"
+        title="Subscribe"
+        onclick={handleSubscribe}
+        disabled={isSubscribeDisabled}></lightning-button>
+
+      <lightning-button
+        variant="destructive"
+        label="Stop Tail"
+        title="Unsubscribe"
+        onclick={handleUnsubscribe}
+        disabled={isUnsubscribeDisabled}
+        class="slds-m-left_x-small"></lightning-button>
+    </div>
+  </lightning-card>
 </template>

@@ -24,11 +24,14 @@ global without sharing class LogService {
 			// different metadata
 	static List<LogRecordFilter__mdt> testRecordFilters = null;
 
+	/**
+	 * allow declaratively publishing log events
+	 * @param logs list of AppLogData
+	 */
 	@InvocableMethod(Label='Write Log Data' Description='Writes desired data to AppLog')
-	global static void logData(List<LogData> logs) {
-		System.debug('In invocable: ' + logs.size());
+	global static void logData(List<AppLogData> logs) {
 
-		for (LogData dataItem : logs) {
+		for (AppLogData dataItem : logs) {
 			String message = dataItem.message;
 			String loggingLevel = dataItem.loggingLevel;
 			String className = dataItem.className;
@@ -268,6 +271,9 @@ global without sharing class LogService {
 		return inputString;
 	}
 
+	/**
+	 * @return message filters
+	 */
 	private static List<LogMessageFilter__mdt> getMessageFilters() {
 		List<LogMessageFilter__mdt> filters;
 		// note: because SF doesn't allow creating custom metadata in tests, we're doing a workaround to allow test to
@@ -318,6 +324,7 @@ global without sharing class LogService {
 	 * @return list of log filters
 	 */
 	private static List<LogRecordFilter__mdt> getRecordFilters(Id currentUserId) {
+		// provide a simple way to test specific LogRecordFilters
 		if (testRecordFilters != null) {
 			return testRecordFilters;
 		}
@@ -331,17 +338,21 @@ global without sharing class LogService {
 		];
 		return recordFilters;
 	}
-	global class LogData{
-		@InvocableVariable(Label='Message' Description='Message to be logged' Required='true')
+
+	/**
+	 * Encapsulates data for declaratively raising log events
+	 */
+	global class AppLogData {
+		@InvocableVariable(Label='Message' Description='Message to be logged' Required=true)
 		global String message;
 
 		@InvocableVariable(Label='Logging Level' Description='Level to Log')
 		global String loggingLevel;
 
-		@InvocableVariable(Label='Flow Name' Description='Name of Flow error occured in')
+		@InvocableVariable(Label='Flow Name' Description='Name of Flow error occurred in')
 		global String className;
 
-		@InvocableVariable(Label='Object Id' Description='Id of object error occured on')
+		@InvocableVariable(Label='Object Id' Description='Id of object error occurred on')
 		global String affectedId;
 	}
 } 

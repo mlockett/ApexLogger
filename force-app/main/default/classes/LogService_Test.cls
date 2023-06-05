@@ -94,8 +94,8 @@ public with sharing class LogService_Test {
 	static void invocableInfoWritesCorrectValues() {
 		testSetup();
 
-		List<LogService.LogData> messages = new List<LogService.LogData>();
-		LogService.LogData data = new LogService.LogData();
+		List<LogService.AppLogData> messages = new List<LogService.AppLogData>();
+		LogService.AppLogData data = new LogService.AppLogData();
 		data.message='abc';
 		data.loggingLevel='INFO';
 		data.className='My Flow';

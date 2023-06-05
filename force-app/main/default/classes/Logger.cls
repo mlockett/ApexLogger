@@ -1,6 +1,6 @@
 /**
-  * Class allow logging at an instance level
-  * @author mlockett
+  * For logging at an instance level
+  * @author mike lockett
   * @date 2019-01-15
  */
 
