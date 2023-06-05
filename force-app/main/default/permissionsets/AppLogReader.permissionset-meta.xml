@@ -8,6 +8,7 @@
         <apexClass>LogUiController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <description>Perm set for reading App Log info</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>AppLog__c.AffectedId__c</field>
@@ -44,7 +45,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Apex Log Reader</label>
+    <label>App Log Reader</label>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -63,4 +64,8 @@
         <object>AppLog__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <tabSettings>
+        <tab>AppLog__c</tab>
+        <visibility>Available</visibility>
+    </tabSettings>
 </PermissionSet>

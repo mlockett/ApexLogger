@@ -1,49 +1,63 @@
-# ApexLogger
-For adding persistent log functionality to Apex.  
-https://objectfactory.ws/tech/log.php
-
-This is a very basic class to give the ability to write persistent logs to the 
-database. Because it uses Platform Events, the database transaction for writing a 
-log does not get rolled back in the case of a failed transaction.
+# Salesforce App Logger
+This is a framework adding persistent, configurable, and queryable log functionality to Salesforce.
 
 ## Features
 
-### Writes log data to Salesforce database for convenient access with reports and SOQL
+### Writes persistent reportable/queryable logs
+Log data to Salesforce database for convenient access with reports and SOQL.
 
-Logs are written in a manner so DML is not added to the current transaction, and there is no rollback when errors occur
+### Logs are not rolled back on errors
+By using platform events, logs do not get rolled back when unhandled errors occur.
 
-Provides both static methods, and a concrete class that implements an interface 
-developers that might want to mock logging in tests, or provide other loggers.
+### Logs do not hit the immediate SOQL limits
+By using platform events, logs are written in a separate context with its own set of limits.
 
+### Filter sensitive data
 Configure data that should be filtered out of logs, e.g. Social Security numbers.
 
+### Optimize what logs are written
 Configure which entries are logged by LoggingLevel/User
 
-Log from Flows
+### Write logs declaratively
+You can write Logs from Flows that use the features included in the framework.
 
 ### See new logs in real time
+A Lightning Web Component sees events in real times.
+
+### Easily view record counts of logs
+On the App Log view page, there is section to see current counts of records to help with purging strategies. 
+
+### Offers an interface, static methods and concrete methods for versatile development
+Provides both static methods, and a concrete class that implements an interface developers that might want to mock logging in tests, or provide other loggers.
 
 ## What's new?
 
-Added log record filtering by LoggingLevel/User
+Added "Invocable" properties to enable more advanced logging in Flows.
 
-Added the ability to filter the log message using regular expressions, read from custom metadata, to help avoid logging sensitive 
-data.
+Added Permission Set for reading logs.
 
-Added a Short Message field to the AppLog object to enable better manipulation with SOQL. The new field simply contains
-the first 255 characters of the Message.
+Added App page with LWC so logs can be viewed in realtime.
 
-Include an "Invocable" method enabling log writing from ProcessBuilders
+Added List View page which includes and LWC to view number of records by logging level.
+
+Made message filters be applied before creating event.
 
 ## Usage
 ### Using static methods
 `LogService.debug('my debug text', 'className');` 
+
 `LogService.debug('my debug text', 'className', affectedId);` 
+
 `LogService.warn('my warning text', 'className');` 
+
 `LogService.warn('my warning text', 'className', affectedId);` 
+
 `LogService.error('my error text', 'className');`
+
 `LogService.error('my error text', 'className', affectedId);` 
+
 `LogService.error(myException, 'className');` 
+
 `LogService.error(myException, 'className', affectedId);` 
 
 Exception example:
