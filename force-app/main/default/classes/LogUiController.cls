@@ -35,7 +35,7 @@ public without sharing class LogUiController {
 	@AuraEnabled
 	public static List<AggregateResult> getLogCountByLevel(){
 		List<AggregateResult> results = [
-				SELECT COUNT(Id), MIN(CreatedDate), LogLevel__c
+				SELECT COUNT(Id) LogCount, MIN(CreatedDate) FisrtCreatedDate, LogLevel__c
 				FROM AppLog__c
 				GROUP BY LogLevel__c
 				ORDER BY LogLevel__c];

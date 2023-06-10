@@ -4,7 +4,7 @@
 @IsTest
 public with sharing class LogService_Test {
 
-	static void testSetup() {
+	public static void testSetup() {
 		LogService.testRecordFilters = new List<LogRecordFilter__mdt>();
 		LogRecordFilter__mdt filter = new LogRecordFilter__mdt();
 		filter.LogLevelCsv__c = 'INFO,DEBUG,WARN,ERROR';
@@ -340,6 +340,7 @@ public with sharing class LogService_Test {
 				+ '12345678901234567890123456789012345678901234567890';
 		AppLogEvent__e event = new AppLogEvent__e();
 		event.Class__c = tooLong;
+		event.Message__c = 'Any message';
 		List<Database.Error> errors = LogService.publishEvent(event);
 		System.assertEquals(1, errors.size());
 	}
