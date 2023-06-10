@@ -17,3 +17,4 @@ IlluminatedCloud
 **/profileSessionSettings/**.*
 
 force-app/main/default/settings/
+force-app/main/default/profiles/
