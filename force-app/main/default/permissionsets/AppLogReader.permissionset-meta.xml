@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>App_Logs</application>
+        <visible>true</visible>
+    </applicationVisibilities>
     <classAccesses>
         <apexClass>LogService</apexClass>
         <enabled>true</enabled>
@@ -8,6 +12,14 @@
         <apexClass>LogUiController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>LogMessageFilter__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>LogRecordFilter__mdt</name>
+    </customMetadataTypeAccesses>
     <description>Perm set for reading App Log info</description>
     <fieldPermissions>
         <editable>true</editable>

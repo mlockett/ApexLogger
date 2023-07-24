@@ -5,13 +5,13 @@
 public with sharing class LogService_Test {
 
 	public static void testSetup() {
-		LogService.testRecordFilters = new List<LogRecordFilter__mdt>();
+		Logger.testRecordFilters = new List<LogRecordFilter__mdt>();
 		LogRecordFilter__mdt filter = new LogRecordFilter__mdt();
 		filter.LogLevelCsv__c = 'INFO,DEBUG,WARN,ERROR';
 		filter.Active_Log_User__c = '*';
 		filter.Active__c = true;
 
-		LogService.testRecordFilters.add(filter);
+		Logger.testRecordFilters.add(filter);
 	}
 
 	/**
@@ -20,14 +20,14 @@ public with sharing class LogService_Test {
 	@IsTest
 	static void canQueryForLoggable() {
 		// clear test values
-		LogService.testRecordFilters = null;
+		Logger.testRecordFilters = null;
 		LogService.isLoggable(UserInfo.getUserId(), LoggingLevel.DEBUG);
 	}
 
 	@IsTest
 	static void filtersLogRecordCorrectly() {
 		testSetup();
-		LogService.testRecordFilters[0].LogLevelCsv__c = 'INFO,WARN';
+		Logger.testRecordFilters[0].LogLevelCsv__c = 'INFO,WARN';
 
 		Test.startTest();
 		LogService.debug('My message', 'foo/method');
@@ -41,7 +41,7 @@ public with sharing class LogService_Test {
 	@IsTest
 	static void filtersLogRecordCorrectlyWithNullFilter() {
 		testSetup();
-		LogService.testRecordFilters[0].LogLevelCsv__c = null;
+		Logger.testRecordFilters[0].LogLevelCsv__c = null;
 
 		Test.startTest();
 		LogService.debug('My message', 'foo/method');
@@ -60,34 +60,15 @@ public with sharing class LogService_Test {
 		filter1.RegexToReplaceWith__c = '***-**-$3';
 		filter1.RegexToFind__c = '(\\d{3})-(\\d{2})-(\\d{4})';
 
-		LogService.testMessageFilters = new List<LogMessageFilter__mdt>();//[filter1];
-		LogService.testMessageFilters.add(filter1);
+		Logger.testMessageFilters = new List<LogMessageFilter__mdt>();//[filter1];
+		Logger.testMessageFilters.add(filter1);
 
 		String textToObscure = 'Hide the 123-12-1234 SSN.';
 		String expectedText = 'Hide the ***-**-1234 SSN.';
 
-		System.assertEquals(expectedText, LogService.filterString(textToObscure));
-	}
+		Logger log = new Logger();
 
-	@IsTest
-	static void logWritesCorrectValues() {
-		testSetup();
-
-		LogService.ignoreTestMode = true;
-		Test.startTest();
-		LogService.log('My message', 'foo/method', LoggingLevel.WARN);
-		Test.stopTest();
-
-		AppLog__c appLog = [
-				SELECT Message__c, LogLevel__c, UserId__c
-				FROM AppLog__c
-				WHERE Class__c = 'foo/method'
-				LIMIT 1
-		];
-
-		System.assertEquals('My message', appLog.Message__c);
-		System.assertEquals('WARN', appLog.LogLevel__c);
-		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
+		System.assertEquals(expectedText, log.filterString(textToObscure));
 	}
 
 	@IsTest
@@ -102,7 +83,7 @@ public with sharing class LogService_Test {
 		data.affectedId='';
 		messages.add(data);
 
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		LogService.logData(messages);
 		Test.stopTest();
@@ -122,7 +103,7 @@ public with sharing class LogService_Test {
 	static void infoWritesCorrectValues() {
 		testSetup();
 
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		LogService.info('My message', 'foo/method');
 		Test.stopTest();
@@ -143,7 +124,7 @@ public with sharing class LogService_Test {
 	static void debugWritesCorrectValues() {
 		testSetup();
 
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		LogService.debug('My message', 'foo/method');
 		Test.stopTest();
@@ -164,7 +145,7 @@ public with sharing class LogService_Test {
 	static void warnWritesCorrectValues() {
 		testSetup();
 
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		LogService.warn('My message', 'foo/method');
 		Test.stopTest();
@@ -185,7 +166,7 @@ public with sharing class LogService_Test {
 	static void errorWritesCorrectValues() {
 		testSetup();
 
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		LogService.error('My message', 'foo/method');
 		Test.stopTest();
@@ -206,7 +187,7 @@ public with sharing class LogService_Test {
 	static void errorWritesCorrectValuesForException() {
 		testSetup();
 
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		try {
 			//noinspection ApexUnusedDeclaration
@@ -234,7 +215,7 @@ public with sharing class LogService_Test {
 
 		testSetup();
 
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		try {
 			//noinspection ApexUnusedDeclaration
@@ -263,13 +244,13 @@ public with sharing class LogService_Test {
 
 		testSetup();
 
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		try {
 			//noinspection ApexUnusedDeclaration
 			Double badNumber = 1 / 0; // force MathException
 		} catch (Exception ex) {
-			LogService.log(ex, 'foo/method', LoggingLevel.DEBUG);
+			LogService.error(ex, 'foo/method');
 		}
 
 		Test.stopTest();
@@ -282,7 +263,7 @@ public with sharing class LogService_Test {
 		];
 
 		System.assert(appLog.Message__c.startsWith('Exception - Type: System.MathException;'));
-		System.assertEquals('DEBUG', appLog.LogLevel__c);
+		System.assertEquals('ERROR', appLog.LogLevel__c);
 		System.assertEquals(UserInfo.getUserId(), appLog.UserId__c);
 	}
 
@@ -315,7 +296,7 @@ public with sharing class LogService_Test {
 		testSetup();
 
 		Test.startTest();
-		LogService.log('My message', 'foo/method', LoggingLevel.DEBUG);
+		LogService.debug('My message', 'foo/method');
 		Test.stopTest();
 
 		List<AppLog__c> appLogs = [
@@ -333,7 +314,7 @@ public with sharing class LogService_Test {
 
 		testSetup();
 
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		String tooLong = '12345678901234567890123456789012345678901234567890'
 				+ '12345678901234567890123456789012345678901234567890'
 				+ '12345678901234567890123456789012345678901234567890'
@@ -341,7 +322,8 @@ public with sharing class LogService_Test {
 		AppLogEvent__e event = new AppLogEvent__e();
 		event.Class__c = tooLong;
 		event.Message__c = 'Any message';
-		List<Database.Error> errors = LogService.publishEvent(event);
+		Logger log = new Logger();
+		List<Database.Error> errors = log.publishEvent(event);
 		System.assertEquals(1, errors.size());
 	}
 }

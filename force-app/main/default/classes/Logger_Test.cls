@@ -9,7 +9,7 @@ public with sharing class Logger_Test {
 	@IsTest
 	static void debugWritesCorrectValues() {
 
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		sut.debug('My message', 'myClass');
 		Test.stopTest();
@@ -28,7 +28,7 @@ public with sharing class Logger_Test {
 
 	@IsTest
 	static void debugWithIdWritesCorrectValues() {
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		sut.debug('My message', 'myClass', 'my id');
 		Test.stopTest();
@@ -48,7 +48,7 @@ public with sharing class Logger_Test {
 
 	@IsTest
 	static void warnWritesCorrectValues() {
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		sut.warn('My message', 'myClass');
 		Test.stopTest();
@@ -67,7 +67,7 @@ public with sharing class Logger_Test {
 
 	@IsTest
 	static void warnWithIdWritesCorrectValues() {
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		sut.warn('My message', 'myClass', 'my id');
 		Test.stopTest();
@@ -87,7 +87,7 @@ public with sharing class Logger_Test {
 
 	@IsTest
 	static void errorWritesCorrectValues() {
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		sut.error('My message', 'myClass');
 		Test.stopTest();
@@ -106,7 +106,7 @@ public with sharing class Logger_Test {
 
 	@IsTest
 	static void errorWritesCorrectValuesForException() {
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		try {
 			//noinspection ApexUnusedDeclaration
@@ -131,7 +131,7 @@ public with sharing class Logger_Test {
 
 	@IsTest
 	static void errorWithIdWritesCorrectValuesForException() {
-		LogService.ignoreTestMode = true;
+		Logger.ignoreTestMode = true;
 		Test.startTest();
 		try {
 			//noinspection ApexUnusedDeclaration

@@ -40,7 +40,7 @@ Added App page with LWC so logs can be viewed in realtime.
 
 Added List View page which includes and LWC to view number of records by logging level.
 
-Made message filters be applied before creating event.
+Changed message filters so they are applied before creating event.
 
 ## Usage
 ### Using static methods
@@ -68,10 +68,14 @@ Exception example:
        LogService.error( ex, 'className');
     }
 
-### Using LogService in a Process Builder
+### Using LogService in a Flow
 
-To log from within a Process Builder, add an Immediate Action; select the type Apex; for Apex Class, select 
-"Write Log"; then under Apex Variables, select the field "messages", then add the desired text. 
+To log from within a Flow, add an Immediate Action; select the type Apex; for Apex Class, select 
+"Write Log"; then under Apex Variables, select the field "messages", then add the desired text.
+
+![Image of flow screen](https://objectfactory.ws/ext_images/logger/logger_flow.png)
+
+
 ### Using Logger instance
     @TestVIsible
     ILogger log = new Logger(); // this allows you to switch to any ILogger for testing
@@ -138,7 +142,7 @@ even without setting SeeAllData = true.
 
 ### Filtering which records are logged
 
-Using the Custom Metadata type Log Record Filtering allows you to setup metadata records
+Using the Custom Metadata type _Log Record Filter_ allows you to setup metadata records
 that determine what records should be logged per user. For instance, you could only log errors and 
 warnings in production, but log Info in sandboxes. You could also communicate to log DEBUG records
 for a single user (like a developer).
@@ -165,6 +169,13 @@ to log INFO,DEBUG,WARN,ERROR. It might be desirable to reduce this for productio
 
   [![Deploy](https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png)](https://githubsfdeploy.herokuapp.com/app/githubdeploy/mlockett/ApexLogger)
 
+  After deploying: 
+
+  * Ensure users that should be able to read the logs are assigned the AppLogReader permission set.
+  * Add an assignment on the _App Logs_ application to the profiles of users that should read logs.
+  * Ensure that the Profiles for users reading logs can view the following tabs:  App Logs, Log Reader, Log List, Log Tester. These can be set to _Default On_.	
+
+
 ## History
 | Date       | Features                                                                                                                                                                   |  
 |:-----------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|  
@@ -176,22 +187,22 @@ to log INFO,DEBUG,WARN,ERROR. It might be desirable to reduce this for productio
 | 2020-07-04 | Code clean up. Changed so message filter runs before the event is published to prevent publishing sensitive data.                                                          |
 | 2023-05-16 | Fixed a deployment error. Added a permission set, Apex Log Reader, for reading log data. Split ClassMethod field into two field, Class__c and Method__c.                   |
 | 2023-05-17 | Changed to DX Source.                   |
+| 2023-07-24 | Refactored so most logic is in the Logger instance class                    |
 
 ## Future Plans
 
-Add methods to log method name.
-
 Add a mechanism to delete old logs systematically thru a scheduled job.
 
-Build a friendly Lightning-based log viewer
+Develop a strategy to allow for multiple loggers (all implementing the ILogger interface).
 
 ## Addendum
 
 This does not replace built-in Salesforce Debug Logging. Built-in system debug logs are
-preferable for debugging issues where the reproduction steps are known, and can be generated 
-at will and read within a maximum 24-hours time-frame.
+a good solution for debugging issues where the reproduction steps are known, and can be generated at will and read within a maximum 24-hours time-frame. Offline debugging uses the standard Salesforce logs.
 
 ## Project Creation
+
+To work with the library in a scratch org, here are a few tips.
 
 To create a scratch org:
 

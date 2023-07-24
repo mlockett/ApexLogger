@@ -4,9 +4,12 @@
         <name>Write_Log</name>
         <label>Write Log</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <actionName>LogService</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Complete</targetReference>
+        </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>className</name>
@@ -26,6 +29,8 @@
                 <elementReference>LogText</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>LogService</nameSegment>
+        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>57.0</apiVersion>
     <choices>
@@ -86,10 +91,26 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <screens>
+        <name>Complete</name>
+        <label>Complete</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Completion_Message</name>
+            <fieldText>&lt;p&gt;The log will be written almost immediately. To perform other logging tests, click Finish to restart the flow.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Main</name>
         <label>Main</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
