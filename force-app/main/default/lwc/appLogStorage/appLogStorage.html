@@ -15,12 +15,16 @@
       <template for:each={data} for:item="log">
       <tr key={log.LogLevel__c}>
         <td class="slds-var-p-bottom_x-small">{log.LogLevel__c}</td>
-        <td class="slds-var-p-bottom_x-small">{log.expr1}</td>
-        <td class="slds-var-p-bottom_x-small">{log.expr0}</td>
+        <td class="slds-var-p-bottom_x-small">{log.FirstCreatedDate}</td>
+        <td class="slds-var-p-bottom_x-small slds-text-align_right">{log.LogCount}</td>
       </tr>
       </template>
-
     </table>
+    <template if:true={error}>
+      <div class="slds-text-color_error">
+        {error}
+      </div>
+    </template>
     </article>
 
   </lightning-card>

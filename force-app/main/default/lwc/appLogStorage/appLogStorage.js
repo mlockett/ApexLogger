@@ -22,8 +22,9 @@ export default class AppLogStorage extends LightningElement {
     getLogCountByLevel()
       .then(data => {
         this.data = data;
-        console.log(JSON.stringify(data));
       })
-      .catch(e => this.error = e);
+      .catch(e => {
+        this.error = e;
+      });
   }
 }
