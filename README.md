@@ -82,6 +82,7 @@ To log from within a Flow, add an Immediate Action; select the type Apex; for Ap
     
     log.debug('my debug text', 'className');  
     log.debug('my debug text', 'className', affectedId);
+    log.info('my info text', 'className');  
     log.warn('my warning text', 'className');
     log.warn('my warning text', 'className', affectedId);
     log.error('my error text', 'className');

@@ -352,6 +352,4 @@ global without sharing class Logger implements ILogger {
         }
         insert logEntries;
     }
-
-
 }
