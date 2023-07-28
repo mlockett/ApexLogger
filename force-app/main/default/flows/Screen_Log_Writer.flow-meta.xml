@@ -29,8 +29,6 @@
                 <elementReference>LogText</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>LogService</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>57.0</apiVersion>
     <choices>
