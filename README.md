@@ -192,9 +192,15 @@ to log INFO,DEBUG,WARN,ERROR. It might be desirable to reduce this for productio
 
 ## Future Plans
 
+Add a mechanism to optionally allow all logging of ERRORs to throw an exception when in test mode.
+
 Add a mechanism to delete old logs systematically thru a scheduled job.
 
 Develop a strategy to allow for multiple loggers (all implementing the ILogger interface).
+
+## License
+
+Basic MIT license.
 
 ## Addendum
 
