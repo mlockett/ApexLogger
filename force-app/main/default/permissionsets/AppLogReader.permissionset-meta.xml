@@ -80,4 +80,8 @@
         <tab>AppLog__c</tab>
         <visibility>Available</visibility>
     </tabSettings>
+    <tabSettings>
+        <tab>Log_List</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
