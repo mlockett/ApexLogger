@@ -20,6 +20,7 @@ global without sharing class LogService {
      * @param message message to be logged
      * @param className <class>.<method> if applicable
      */
+    @AuraEnabled
     global static void debug(String message, String className) {
         logger.debug(message, className);
     }
@@ -30,6 +31,7 @@ global without sharing class LogService {
      * @param message message to be logged
      * @param className <class>.<method> if applicable
      */
+    @AuraEnabled
     global static void info(String message, String className) {
         logger.info(message, className);
     }
@@ -40,6 +42,7 @@ global without sharing class LogService {
      * @param message message to be logged
      * @param className <class>.<method> if applicable
      */
+    @AuraEnabled
     global static void warn(String message, String className) {
         logger.warn(message, className);
     }
@@ -50,6 +53,7 @@ global without sharing class LogService {
      * @param ex exception to log
      * @param className <class>.<method> if applicable
      */
+    @AuraEnabled
     global static void error(Exception ex, String className) {
         logger.error(ex, className);
     }
@@ -61,6 +65,7 @@ global without sharing class LogService {
      * @param className <class>.<method> if applicable
      * @param affectedId record Id(s) related to log event
      */
+    @AuraEnabled
     global static void error(Exception ex, String className, String affectedId) {
         logger.error(ex, className, affectedId);
     }
@@ -71,6 +76,7 @@ global without sharing class LogService {
      * @param message message to be logged
      * @param className <class>.<method> if applicable
      */
+    @AuraEnabled
     global static void error(String message, String className) {
         logger.error(message, className);
     }
@@ -124,4 +130,4 @@ global without sharing class LogService {
         @InvocableVariable(Label='Object Id' Description='Id of object error occurred on')
         global String affectedId;
     }
-} 
+}
