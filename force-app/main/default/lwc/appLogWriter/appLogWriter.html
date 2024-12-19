@@ -1,45 +1,27 @@
 <!-- appLogWriter.html -->
 <template>
-    <div class="slds-card">
-        <div class="slds-card__header">
-            <div class="slds-media">
-                <div class="slds-media__body">
-                    <h2 class="slds-card__header-title">Write Log Entry</h2>
-                </div>
+    <lightning-card title="Write Log Entry">
+        <div class="slds-m-around_medium">
+            <lightning-textarea 
+                class="slds-m-vertical_medium"
+                placeholder="Enter log message"
+                value={message} 
+                onchange={handleMessageChange}>
+            </lightning-textarea>
+            <div class="slds-text-align_center">
+                <lightning-button-group>
+                    <template for:each={logLevelOptions} for:item="option">
+                        <lightning-button 
+                            key={option.value} 
+                            label={option.label} 
+                            value={option.value}
+                            icon-name={option.iconName}
+                            onclick={handleSubmit} 
+                            disabled={isSubmitDisabled}>
+                        </lightning-button>
+                    </template>
+                </lightning-button-group>
             </div>
         </div>
-        <div class="slds-card__body slds-card__body_inner">
-            <div class="slds-form">
-                <div class="slds-form-element slds-m-bottom_medium">
-                    <label class="slds-form-element__label">Log Level</label>
-                    <div class="slds-form-element__control">
-                        <lightning-radio-group 
-                            name="logLevel"
-                            type="button"
-                            options={logLevelOptions}
-                            value={logLevel}
-                            onchange={handleLogLevelChange}>
-                        </lightning-radio-group>
-                    </div>
-                </div>
-                <div class="slds-form-element slds-m-bottom_medium">
-                    <label class="slds-form-element__label" for="message">Message</label>
-                    <div class="slds-form-element__control">
-                        <textarea 
-                            id="message" 
-                            class="slds-textarea" 
-                            onkeyup={handleMessageChange}
-                            onchange={handleMessageChange} 
-                            placeholder="Enter log message">
-                        </textarea>
-                    </div>
-                </div>
-                <div class="slds-m-top_medium slds-text-align_right">
-                    <button class="slds-button slds-button_brand" onclick={handleSubmit} disabled={isSubmitDisabled}>
-                        Write Log
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    </lightning-card>
 </template>

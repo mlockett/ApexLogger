@@ -1,18 +1,17 @@
 // appLogWriter.js
-import { LightningElement, track } from 'lwc';
+import { LightningElement } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import debug from '@salesforce/apex/LogService.debug';
 import info from '@salesforce/apex/LogService.info';
 import warn from '@salesforce/apex/LogService.warn';
 
 export default class AppLogWriter extends LightningElement {
-    @track logLevel = 'INFO';
-    @track message = '';
+    message = '';
 
     get logLevelOptions() {
         return [
-            { label: 'DEBUG', value: 'DEBUG', iconName: 'utility:bug' },
             { label: 'INFO', value: 'INFO', iconName: 'utility:info' },
+            { label: 'DEBUG', value: 'DEBUG', iconName: 'utility:bug' },
             { label: 'WARN', value: 'WARN', iconName: 'utility:warning' }
         ];
     }
@@ -29,11 +28,11 @@ export default class AppLogWriter extends LightningElement {
         this.message = event.target.value;
     }
 
-    async handleSubmit() {
+    async handleSubmit(event) {
         try {
             const className = 'AppLogWriter.component';
             
-            switch(this.logLevel) {
+            switch(event.target.value) {
                 case 'DEBUG':
                     await debug({ message: this.message, className: className });
                     break;
@@ -44,7 +43,6 @@ export default class AppLogWriter extends LightningElement {
                     await warn({ message: this.message, className: className });
                     break;
             }
-            
 
             this.showToast('Success', 'Log entry created successfully', 'success');
             this.clearForm();
@@ -55,7 +53,6 @@ export default class AppLogWriter extends LightningElement {
 
     clearForm() {
         this.message = '';
-        this.template.querySelector('textarea').value = '';
     }
     
     showToast(title, message, variant) {
