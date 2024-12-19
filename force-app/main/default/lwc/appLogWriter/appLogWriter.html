@@ -1,0 +1,27 @@
+<!-- appLogWriter.html -->
+<template>
+    <lightning-card title="Write Log Entry">
+        <div class="slds-m-around_medium">
+            <lightning-textarea 
+                class="slds-m-vertical_medium"
+                placeholder="Enter log message"
+                value={message} 
+                onchange={handleMessageChange}>
+            </lightning-textarea>
+            <div class="slds-text-align_center">
+                <lightning-button-group>
+                    <template for:each={logLevelOptions} for:item="option">
+                        <lightning-button 
+                            key={option.value} 
+                            label={option.label} 
+                            value={option.value}
+                            icon-name={option.iconName}
+                            onclick={handleSubmit} 
+                            disabled={isSubmitDisabled}>
+                        </lightning-button>
+                    </template>
+                </lightning-button-group>
+            </div>
+        </div>
+    </lightning-card>
+</template>
