@@ -1,5 +1,6 @@
 // appLogWriter.js
 import { LightningElement, track } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import debug from '@salesforce/apex/LogService.debug';
 import info from '@salesforce/apex/LogService.info';
 import warn from '@salesforce/apex/LogService.warn';
@@ -7,9 +8,6 @@ import warn from '@salesforce/apex/LogService.warn';
 export default class AppLogWriter extends LightningElement {
     @track logLevel = 'INFO';
     @track message = '';
-    @track showToast = false;
-    @track toastMessage = '';
-    @track toastType = '';
 
     get logLevelOptions() {
         return [
@@ -21,10 +19,6 @@ export default class AppLogWriter extends LightningElement {
 
     get isSubmitDisabled() {
         return !this.message || this.message.trim().length === 0;
-    }
-
-    get toastClass() {
-        return `slds-notify slds-notify_toast ${this.toastType === 'success' ? 'slds-theme_success' : 'slds-theme_error'}`;
     }
 
     handleLogLevelChange(event) {
@@ -51,11 +45,11 @@ export default class AppLogWriter extends LightningElement {
                     break;
             }
             
-            this.showSuccess('Log entry created successfully');
+
+            this.showToast('Success', 'Log entry created successfully', 'success');
             this.clearForm();
         } catch (error) {
-            console.error('Error:', error);
-            this.showError('Error creating log entry: ' + error.message);
+            this.showToast('Error', 'Error creating log entry: ' + error.message, 'error');
         }
     }
 
@@ -63,24 +57,13 @@ export default class AppLogWriter extends LightningElement {
         this.message = '';
         this.template.querySelector('textarea').value = '';
     }
-
-    showSuccess(message) {
-        this.showToast = true;
-        this.toastMessage = message;
-        this.toastType = 'success';
-        this.hideToastAfterDelay();
-    }
-
-    showError(message) {
-        this.showToast = true;
-        this.toastMessage = message;
-        this.toastType = 'error';
-        this.hideToastAfterDelay();
-    }
-
-    hideToastAfterDelay() {
-        setTimeout(() => {
-            this.showToast = false;
-        }, 3000);
+    
+    showToast(title, message, variant) {
+        const event = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant
+        });
+        this.dispatchEvent(event);
     }
 }
