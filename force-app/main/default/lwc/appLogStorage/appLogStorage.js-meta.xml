@@ -8,4 +8,22 @@
         <target>lightning__HomePage</target>
     </targets>
     <masterLabel>App Log Storage</masterLabel>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage">
+            <property 
+                name="refreshInterval" 
+                type="Integer" 
+                default="30"
+                label="Default Refresh Rate (seconds)" 
+                description="Leave blank for no automatic refresh"/>
+            <property 
+                name="defaultDateFilter" 
+                type="String" 
+                label="Default Date Filter" 
+                default="THIS_WEEK" 
+                description="Use relative options like TODAY, LAST_WEEK, THIS_MONTH, etc."
+                required="true">
+            </property>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>
