@@ -1,81 +1,88 @@
 <!--
   @author mikelockett
   @date 3/15/20.
+
+  contributor: Ryan Schierholz
+  updated: 2024-12-20
  -->
 
 <!-- Log Reader -->
 <template>
   <lightning-card title="Log Reader" icon-name="custom:custom67">
-    <div class="slds-m-around_medium">
-      <div class="slds-grid">
-        <div class="slds-size_1-of-2" style="vertical-align: bottom">
-          <!--<div  style="border: 1px solid #acc; display:inline-block; border-radius:4px;">-->
-          <lightning-button-stateful
-            class="log-level"
-            label-when-off="Info"
-            label-when-on="Info"
-            label-when-hover="Info"
-            icon-name-when-off="utility:add"
-            icon-name-when-on="utility:check"
-            icon-name-when-hover="utility:close"
-            selected={logLevelsSelected.info}
-            onclick={handleButtonClick}
-            data-log-level="info">
-          </lightning-button-stateful>
+    <div slot="actions">
+      <lightning-button-group class="slds-m-horizontal_large">
+        <!-- <lightning-button-icon-stateful
+          name="all"
+          icon-name="utility:all"
+          selected={logLevelsSelected.all}
+          onclick={handleButtonClick}
+          alternative-text="ALL">
+        </lightning-button-icon-stateful> -->
+      <lightning-button-icon-stateful
+          name="info"
+          icon-name="utility:info"
+          selected={logLevelsSelected.info}
+          onclick={handleButtonClick}
+          alternative-text="INFO">
+        </lightning-button-icon-stateful>
+        <lightning-button-icon-stateful
+        name="debug"
+        icon-name="utility:bug"
+        selected={logLevelsSelected.debug}
+        onclick={handleButtonClick}
+        alternative-text="DEBUG">
+      </lightning-button-icon-stateful>
+      <lightning-button-icon-stateful
+      name="warn"
+      icon-name="utility:warning"
+      selected={logLevelsSelected.warn}
+      onclick={handleButtonClick}
+      alternative-text="WARN">
+    </lightning-button-icon-stateful>
+    <lightning-button-icon-stateful
+    name="error"
+    icon-name="utility:error"
+    selected={logLevelsSelected.error}
+    onclick={handleButtonClick}
+    alternative-text="ERROR">
+  </lightning-button-icon-stateful>
+</lightning-button-group>
+<lightning-button-group class="slds-m-right_large">
+    <lightning-button
+      variant={tailButton.variant}
+      icon-name={tailButton.iconName}
+      label={tailButton.label}
+      title={tailButton.title}
+      onclick={toggleSubscribe}
+      ></lightning-button>
+</lightning-button-group>
+      <lightning-button-menu
+          alternative-text="Settings" 
+          icon-name="utility:settings"  
+          menu-alignment="right">
+        <lightning-menu-subheader 
+          label="Logs Per Page">
+        </lightning-menu-subheader>
+        <template for:each={lppSettings} for:item="setting" >
+          <lightning-menu-item 
+              key={setting.label} 
+              value={setting.value} 
+              label={setting.label} 
+              checked={setting.checked} 
+              onclick={handleSettingLpp} 
+              icon-name={setting.icon}></lightning-menu-item>
+      </template>
+      </lightning-button-menu>
 
-          <lightning-button-stateful
-            class="log-level"
-            label-when-off="Debug"
-            label-when-on="Debug"
-            label-when-hover="Debug"
-            icon-name-when-off="utility:add"
-            icon-name-when-on="utility:check"
-            icon-name-when-hover="utility:close"
-            selected={logLevelsSelected.debug}
-            onclick={handleButtonClick}
-            data-log-level="debug">
-          </lightning-button-stateful>
-
-          <lightning-button-stateful
-            class="log-level"
-            label-when-off="Warn"
-            label-when-on="Warn"
-            label-when-hover="Warn"
-            icon-name-when-off="utility:add"
-            icon-name-when-on="utility:check"
-            icon-name-when-hover="utility:close"
-            selected={logLevelsSelected.warn}
-            onclick={handleButtonClick}
-            data-log-level="warn">
-          </lightning-button-stateful>
-
-          <lightning-button-stateful
-            class="log-level"
-            label-when-off="Error"
-            label-when-on="Error"
-            label-when-hover="Error"
-            icon-name-when-off="utility:add"
-            icon-name-when-on="utility:check"
-            icon-name-when-hover="utility:close"
-            selected={logLevelsSelected.error}
-            onclick={handleButtonClick}
-            data-log-level="error">
-          </lightning-button-stateful>
-
-        </div>
-        <div class="slds-size_1-of-2 right-tool-bar">
-          <lightning-combobox
-            name="Logs per page"
-            label="Logs per page"
-            class="logs-per-page slds-var-p-bottom_medium"
-            value={logsPerPage}
-            options={logsPerPageOptions}
-            onchange={handleLogsPerPageChange}></lightning-combobox>
-
-          <button onclick={loadLogs} class="refresh slds-var-m-left_medium">Refresh</button>
-        </div>
+      <lightning-button-icon
+      class="slds-m-left_xx-small"
+        icon-name="utility:refresh"
+        title="Refresh"
+        onclick={loadLogs}
+        >
+      </lightning-button-icon>
       </div>
-
+    <div class="slds-m-around_medium">
       <template if:true={logs}>
 
         <div class="log-list">
@@ -109,20 +116,7 @@
           New log entries are now being tracked and will be displayed at the top of the list.
         </p>
       </template>
-      <lightning-button
-        variant="success"
-        label="Tail"
-        title="Subscribe"
-        onclick={handleSubscribe}
-        disabled={isSubscribeDisabled}></lightning-button>
-
-      <lightning-button
-        variant="destructive"
-        label="Stop Tail"
-        title="Unsubscribe"
-        onclick={handleUnsubscribe}
-        disabled={isUnsubscribeDisabled}
-        class="slds-m-left_x-small"></lightning-button>
+     
     </div>
   </lightning-card>
 </template>
