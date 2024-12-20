@@ -1,6 +1,8 @@
 /**
  * author mikelockett
  * date 2020-15-03
+ * contributor: Ryan Schierholz
+ * updated: 2024-12-20
  */
 import { LightningElement, track } from "lwc";
 import { subscribe, unsubscribe } from "lightning/empApi";
@@ -41,21 +43,18 @@ const defaultColumns = [
 export default class LogReader extends LightningElement {
   @track logs;
 
-  @track
-  logsPerPage = "10";
-  logsPerPageOptions = [
-    { label: "10", value: "10" },
-    { label: "20", value: "20" },
-    { label: "50", value: "50" }
+  @track lppSettings = [
+    {label: '10', value:10, checked:true },
+    {label: '20', value:20, checked:false},
+    {label: '50', value:50, checked:false},
   ];
 
   @track logLevelsSelected = {
-    info: false,
-    debug: false,
-    warn: false,
-    error: true
+    info:   false,
+    debug:  false,
+    warn:   false,
+    error:  true
   };
-
 
   isSubscribeDisabled = false;
   isUnsubscribeDisabled = !this.isSubscribeDisabled;
@@ -65,6 +64,13 @@ export default class LogReader extends LightningElement {
 
   logsError;
   logsErrorJson;
+
+  tailButton = {
+    variant:  "brand-outline",
+    label:    "Tail",
+    iconName: "utility:play",
+    title:    "Tail the logs",
+  };
 
   paramsForGetLog = {
     logLevels: ["INFO", "DEBUG"],
@@ -90,7 +96,7 @@ export default class LogReader extends LightningElement {
         }
         this.logsError = undefined;
         this.logsErrorJson = undefined;
-        console.log("log success: " + this.logs);
+        //console.log("log success: " + this.logs);
       })
       .catch(error => {
         this.logsError = error;
@@ -100,9 +106,9 @@ export default class LogReader extends LightningElement {
   }
 
   handleButtonClick(event) {
-    let logLevel = event.target.getAttribute("data-log-level");
+    let logLevel = event.target.name;
     this.logLevelsSelected[logLevel] = !this.logLevelsSelected[logLevel];
-    console.log(JSON.stringify(this.logLevelsSelected));
+    //console.log(JSON.stringify(this.logLevelsSelected));
     this.handleButtonChange();
   }
 
@@ -137,6 +143,27 @@ export default class LogReader extends LightningElement {
     this.loadLogs();
   }
 
+  handleSettingLpp(event){
+    for (let i in this.lppSettings){
+      if(this.lppSettings[i].value === event.target.value){
+          this.lppSettings[i].checked = true;
+          this.paramsForGetLog.logsPerPage = event.target.value;
+      } else {
+        this.lppSettings[i].checked = false;
+      }
+    }
+    this.loadLogs();
+  }
+
+  toggleSubscribe(){
+    this.isSubscribeDisabled = !this.isSubscribeDisabled;
+    if (this.isSubscribeDisabled){
+      this.handleSubscribe();
+    } else {
+      this.handleUnsubscribe();
+    }
+  }
+
   // Handles subscribe button click
   handleSubscribe() {
     // Callback invoked whenever a new event message is received
@@ -154,12 +181,20 @@ export default class LogReader extends LightningElement {
       console.log("Successfully subscribed to : ", JSON.stringify(response.channel));
       this.subscription = response;
       this.toggleSubscribeButton(true);
+      this.tailButton.variant = "brand";
+      this.tailButton.iconName = "utility:stop";
+      this.tailButton.title = "Stop tailing the logs";
+      this.tailButton.label = "Stop";
     });
   }
 
   // Handles unsubscribe button click
   handleUnsubscribe() {
     this.toggleSubscribeButton(false);
+    this.tailButton.variant = "brand-outline";
+    this.tailButton.iconName = "utility:play";
+    this.tailButton.title = "Tail the logs";
+    this.tailButton.label = "Tail";
 
     // Invoke unsubscribe method of empApi
     unsubscribe(this.subscription, response => {

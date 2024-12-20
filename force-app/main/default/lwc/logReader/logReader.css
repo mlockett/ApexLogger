@@ -6,21 +6,3 @@
     border-collapse: collapse;
     margin: 2em 0;
 }
-
-.log-level{
-    margin-right: 1em;
-}
-
-.logs-per-page{
-    display: inline-block;
-    width: 6rem;
-}
-
-.refresh {
-    padding: 4px;
-}
-
-.right-tool-bar {
-    text-align: right;
-    margin-top: -24px;
-}
